@@ -1,0 +1,220 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/RelWithDebInfo/2u305wb4/obj/x86/libTexturedTeapotNativeActivity.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"target_compile_options",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 43,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 67,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 59,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 57,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -Wall -Werror -fno-exceptions -frtti -O2 -g -DNDEBUG -fPIC"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-unused-function"
+				},
+				{
+					"fragment" : "-std=c++14"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"define" : "TexturedTeapotNativeActivity_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "/Users/brandon/Projects/Mace/common"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/Users/brandon/Library/Android/sdk/ndk-bundle/sources/android/native_app_glue"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/Users/brandon/Projects/Mace/common/ndk_helper"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"sysroot" : 
+			{
+				"path" : "/Users/brandon/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+			}
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "NdkHelper::@a40f519c52098ca58ad9"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "native_app_glue::@a40f519c52098ca58ad9"
+		}
+	],
+	"id" : "TexturedTeapotNativeActivity::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libgcc_real.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments   -u ANativeActivity_onCreate",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/x86/libNdkHelper.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/x86/libnative_app_glue.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lGLESv2",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lEGL",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-llog",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-landroid",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-latomic",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-latomic -lm",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : "/Users/brandon/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot"
+		}
+	},
+	"name" : "TexturedTeapotNativeActivity",
+	"nameOnDisk" : "libTexturedTeapotNativeActivity.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "TeapotNativeActivity.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "TeapotRenderer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "TexturedTeapotRender.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Texture.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "AssetUtil.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

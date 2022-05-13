@@ -1,0 +1,2 @@
+/Users/brandon/Projects/Mace/common/ndk_helper/CMakeLists.txt
+/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt

@@ -1,0 +1,184 @@
+[
+  {
+    "level_": 0,
+    "message_": "Start JSON generation. Platform version: 24 min SDK version: x86_64",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -753473013
+  },
+  {
+    "level_": 0,
+    "message_": "rebuilding JSON /Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64/android_gradle_build.json due to:",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 813675794
+  },
+  {
+    "level_": 0,
+    "message_": "- expected json /Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64/android_gradle_build.json file is not present, will remove stale json folder",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -1443003028
+  },
+  {
+    "level_": 0,
+    "message_": "- missing previous command file /Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64/metadata_generation_command.txt, will remove stale json folder",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 574270602
+  },
+  {
+    "level_": 0,
+    "message_": "- command changed from previous, will remove stale json folder",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -1552283849
+  },
+  {
+    "level_": 0,
+    "message_": "removing stale contents from \u0027/Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64\u0027",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -97991163
+  },
+  {
+    "level_": 0,
+    "message_": "created folder \u0027/Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64\u0027",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 97333521
+  },
+  {
+    "level_": 0,
+    "message_": "executing cmake Executable : /Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/cmake\narguments : \n-H/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp\n-DCMAKE_SYSTEM_NAME\u003dAndroid\n-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\n-DCMAKE_SYSTEM_VERSION\u003d24\n-DANDROID_PLATFORM\u003dandroid-24\n-DANDROID_ABI\u003dx86_64\n-DCMAKE_ANDROID_ARCH_ABI\u003dx86_64\n-DANDROID_NDK\u003d/Users/brandon/Library/Android/sdk/ndk-bundle\n-DCMAKE_ANDROID_NDK\u003d/Users/brandon/Library/Android/sdk/ndk-bundle\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/brandon/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/ninja\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/Debug/3x6o2e3m/obj/x86_64\n-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/Debug/3x6o2e3m/obj/x86_64\n-DCMAKE_BUILD_TYPE\u003dDebug\n-B/Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64\n-GNinja\n-DANDROID_TOOLCHAIN\u003dclang\n-DANDROID_STL\u003dc++_static\njvmArgs : \n\n",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -1968178228
+  },
+  {
+    "level_": 0,
+    "message_": "Executable : /Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/cmake\narguments : \n-H/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp\n-DCMAKE_SYSTEM_NAME\u003dAndroid\n-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\n-DCMAKE_SYSTEM_VERSION\u003d24\n-DANDROID_PLATFORM\u003dandroid-24\n-DANDROID_ABI\u003dx86_64\n-DCMAKE_ANDROID_ARCH_ABI\u003dx86_64\n-DANDROID_NDK\u003d/Users/brandon/Library/Android/sdk/ndk-bundle\n-DCMAKE_ANDROID_NDK\u003d/Users/brandon/Library/Android/sdk/ndk-bundle\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/brandon/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d/Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/ninja\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/Debug/3x6o2e3m/obj/x86_64\n-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/Debug/3x6o2e3m/obj/x86_64\n-DCMAKE_BUILD_TYPE\u003dDebug\n-B/Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64\n-GNinja\n-DANDROID_TOOLCHAIN\u003dclang\n-DANDROID_STL\u003dc++_static\njvmArgs : \n\n",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 361355595
+  },
+  {
+    "level_": 0,
+    "message_": "Exiting generation of /Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64/compile_commands.json.bin normally",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -509327594
+  },
+  {
+    "level_": 0,
+    "message_": "done executing cmake",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": -1864630100
+  },
+  {
+    "level_": 0,
+    "message_": "write command file /Users/brandon/Projects/Mace/textured-teapot/.cxx/Debug/3x6o2e3m/x86_64/metadata_generation_command.txt",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 712356358
+  },
+  {
+    "level_": 0,
+    "message_": "JSON generation completed without problems",
+    "file_": "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt",
+    "tag_": "debug|x86_64",
+    "diagnosticCode_": 0,
+    "memoizedIsInitialized": 1,
+    "unknownFields": {
+      "fields": {},
+      "fieldsDescending": {}
+    },
+    "memoizedSize": -1,
+    "memoizedHashCode": 73442984
+  }
+]

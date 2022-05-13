@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/brandon/Projects/Mace/app/.cxx/Debug/4w2l5u13/arm64-v8a'
+ninja: no work to do.

@@ -1,0 +1,1 @@
+/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/RelWithDebInfo/2u305wb4/obj/x86

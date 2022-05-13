@@ -1,0 +1,40 @@
+{
+  "buildFiles": [
+    "/Users/brandon/Projects/Mace/common/ndk_helper/CMakeLists.txt",
+    "/Users/brandon/Projects/Mace/textured-teapot/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/brandon/Projects/Mace/textured-teapot/.cxx/RelWithDebInfo/2u305wb4/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/brandon/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/brandon/Projects/Mace/textured-teapot/.cxx/RelWithDebInfo/2u305wb4/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "NdkHelper::@d547e49e076b17793d26": {
+      "artifactName": "NdkHelper",
+      "abi": "x86_64",
+      "output": "/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/x86_64/libNdkHelper.a",
+      "runtimeFiles": []
+    },
+    "native_app_glue::@d547e49e076b17793d26": {
+      "artifactName": "native_app_glue",
+      "abi": "x86_64",
+      "output": "/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/x86_64/libnative_app_glue.a",
+      "runtimeFiles": []
+    },
+    "TexturedTeapotNativeActivity::@6890427a1f51a3e7e1df": {
+      "artifactName": "TexturedTeapotNativeActivity",
+      "abi": "x86_64",
+      "output": "/Users/brandon/Projects/Mace/textured-teapot/build/intermediates/cxx/RelWithDebInfo/2u305wb4/obj/x86_64/libTexturedTeapotNativeActivity.so",
+      "runtimeFiles": []
+    }
+  }
+}
