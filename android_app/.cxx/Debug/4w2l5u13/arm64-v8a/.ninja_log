@@ -1,0 +1,25 @@
+# ninja log v5
+4	153	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/gl3stub.cpp.o	c3a489aa2286f59b
+5	614	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/perfMonitor.cpp.o	e2e6f68023e9a2d1
+5	615	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/sensorManager.cpp.o	95d0cfda957bf0db
+4	631	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/interpolator.cpp.o	acde5ad16db35dda
+2	659	1652458048	CMakeFiles/SpacegameActivity.dir/Engine.cpp.o	4b118166872b3a0d
+3	665	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/gestureDetector.cpp.o	2dd424263c83cafd
+3	668	1652458048	CMakeFiles/SpacegameActivity.dir/AssetUtil.cpp.o	b8004c1acd517f9f
+3	689	1652458048	CMakeFiles/SpacegameActivity.dir/TeapotRenderer.cpp.o	942be70bffd6e3a8
+3	711	1652458048	CMakeFiles/SpacegameActivity.dir/TexturedTeapotRender.cpp.o	839841e0eaaa3fb6
+153	773	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/shader.cpp.o	57ec0dd4437a87ed
+1	940	1652458048	CMakeFiles/SpacegameActivity.dir/Texture.cpp.o	33f5f5ef65a4bff4
+5	964	1652458048	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/JNIHelper.cpp.o	4bb091bc24a888c5
+3	45	1652458064	/Users/brandon/Projects/Mace/engine/bin/Debug/arm64-v8a/CMakeFiles/engine.dir/graphics/Graphics.cpp.o	ef2a1c034ee2b028
+3	45	1652458064	/Users/brandon/Projects/Mace/android_engine/bin/Debug/arm64-v8a/CMakeFiles/android_engine.dir/hello.cpp.o	bf4bd9f457b50aee
+45	104	1652458064	/Users/brandon/Projects/Mace/app/build/intermediates/cxx/Debug/4w2l5u13/obj/arm64-v8a/libandroid_engine.so	d9c9851dee7e58a0
+3	131	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/native_app_glue.dir/Users/brandon/Library/Android/sdk/ndk-bundle/sources/android/native_app_glue/android_native_app_glue.c.o	bff293e6df75b03c
+131	242	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/libnative_app_glue.a	8294fdd344d9faa
+3	311	1652458064	/Users/brandon/Projects/Mace/engine/bin/Debug/arm64-v8a/CMakeFiles/engine.dir/engine.cpp.o	669a489f728f4676
+311	370	1652458064	/Users/brandon/Projects/Mace/app/build/intermediates/cxx/Debug/4w2l5u13/obj/arm64-v8a/libengine.so	34c67a2c620d9162
+2	376	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/GLContext.cpp.o	85a9de30fccc728a
+2	378	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/vecmath.cpp.o	4f921c9fe428da82
+2	588	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/CMakeFiles/NdkHelper.dir/tapCamera.cpp.o	aaa9d7a774f56025
+588	649	1652458064	/Users/brandon/Projects/Mace/common/ndkHelperBin/Debug/arm64-v8a/libNdkHelper.a	7e79def9cb14bc4
+650	759	1652458064	/Users/brandon/Projects/Mace/app/build/intermediates/cxx/Debug/4w2l5u13/obj/arm64-v8a/libSpacegameActivity.so	a49febade9fa5cc6

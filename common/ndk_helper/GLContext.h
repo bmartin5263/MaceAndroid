@@ -78,10 +78,9 @@ private:
 
     // Flags
     bool glesInitialized;
-    bool eglInitialized;
+    bool initialized;
     float glVersion;
 
-    void initGLES();
     void terminate();
     void initEGLSurface();
     void initEGLContext();

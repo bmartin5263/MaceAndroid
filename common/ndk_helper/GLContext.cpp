@@ -25,44 +25,28 @@ namespace ndk_helper {
 
 
 GLContext::GLContext():
-    window(nullptr),
-    display(EGL_NO_DISPLAY),
-    surface(EGL_NO_SURFACE),
-    context(EGL_NO_CONTEXT),
-    width(0),
-    height(0),
-    glesInitialized(false),
-    eglInitialized(false)
+        window(nullptr),
+        display(EGL_NO_DISPLAY),
+        surface(EGL_NO_SURFACE),
+        context(EGL_NO_CONTEXT),
+        width(0),
+        height(0),
+        glesInitialized(false),
+        initialized(false)
 {}
 
 GLContext::~GLContext() {
     terminate();
 }
 
-void GLContext::initGLES() {
-    if (glesInitialized) {
-        return;
-    }
-    const char* versionStr = (const char*)glGetString(GL_VERSION);
-    if (strstr(versionStr, "OpenGL ES 3.") && gl3stubInit()) {
-        glVersion = 3.0f;
-    } else {
-        LOGE("EGL 3 Unavailable");
-        assert(false);
-        glVersion = 2.0f;
-    }
-    glesInitialized = true;
-}
-
 void GLContext::init(ANativeWindow* window) {
-    if (eglInitialized) {
+    if (initialized) {
         return;
     }
     this->window = window;
     initEGLSurface();
     initEGLContext();
-    initGLES();
-    eglInitialized = true;
+    initialized = true;
 }
 
 void GLContext::initEGLSurface() {
@@ -139,8 +123,8 @@ void GLContext::initEGLContext() {
 }
 
 EGLint GLContext::swap() {
-    bool b = eglSwapBuffers(display, surface);
-    if (!b) {
+    bool success = eglSwapBuffers(display, surface);
+    if (!success) {
         EGLint err = eglGetError();
         if (err == EGL_BAD_SURFACE) {
             // Recreate surface
@@ -177,7 +161,7 @@ void GLContext::terminate() {
 }
 
 EGLint GLContext::resume(ANativeWindow* window) {
-    if (!eglInitialized) {
+    if (!initialized) {
         init(window);
         return EGL_SUCCESS;
     }
@@ -225,7 +209,7 @@ void GLContext::suspend() {
 
 bool GLContext::invalidate() {
     terminate();
-    eglInitialized = false;
+    initialized = false;
     return true;
 }
 

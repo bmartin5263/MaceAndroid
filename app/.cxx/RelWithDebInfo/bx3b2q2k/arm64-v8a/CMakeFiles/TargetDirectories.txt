@@ -1,7 +1,0 @@
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/arm64-v8a/CMakeFiles/TexturedTeapotNativeActivity.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/arm64-v8a/CMakeFiles/NdkHelper.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/arm64-v8a/CMakeFiles/native_app_glue.dir

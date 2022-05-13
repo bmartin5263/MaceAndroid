@@ -1,0 +1,4 @@
+/Users/brandon/Projects/Mace/android_engine/src/CMakeLists.txt
+/Users/brandon/Projects/Mace/app/src/main/cpp/CMakeLists.txt
+/Users/brandon/Projects/Mace/common/ndk_helper/CMakeLists.txt
+/Users/brandon/Projects/Mace/engine/src/CMakeLists.txt

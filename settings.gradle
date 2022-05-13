@@ -1,1 +1,4 @@
-include ':app'
+include ':android_app'
+include ':engine'
+include ':android_engine'
+include ':game'
