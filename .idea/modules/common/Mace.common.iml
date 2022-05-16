@@ -19,6 +19,7 @@
     <content url="file://$MODULE_DIR$/../../../common">
       <excludeFolder url="file://$MODULE_DIR$/../../../common/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../common/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../common/stb" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
