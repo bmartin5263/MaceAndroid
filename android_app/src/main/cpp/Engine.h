@@ -13,16 +13,14 @@
 #include <android_native_app_glue.h>
 #include <android/native_window_jni.h>
 
-#include "TexturedTeapotRender.h"
+#include "TexturedTeapotRenderer.h"
 #include "NDKHelper.h"
 
 const char* HELPER_CLASS_NAME = "dev/bdon/helper/NDKHelper";
 
-struct android_app;
 class Engine {
 public:
     explicit Engine(android_app *app);
-    ~Engine() = default;
 
     void run();
     bool update();
@@ -35,39 +33,40 @@ public:
     void termWindow();
     void trimMemory();
     bool hasFocus() const;
-    void initSensors();
-    void processSensors(int32_t id);
-    void suspendSensors();
-    void resumeSensors();
 
-    static void onAppCmd(android_app* app, int32_t cmd);
-    static int32_t onInputEvent(android_app* app, AInputEvent* event);
+    void handleCmd(android_app* app, int32_t cmd);
+    int32_t handleInputEvent(android_app* app, AInputEvent* event);
+
+    static void OnAppCmd(android_app* app, int32_t cmd);
+    static int32_t OnInputEvent(android_app* app, AInputEvent* event);
 
 private:
     void showUI();
     void updateFPS();
 
-    void TransformPosition(ndk_helper::Vec2 &vec);
+    void transformPosition(Vec2 &vec);
 
-    TexturedTeapotRender renderer_;
-    ndk_helper::GLContext *gl_context_;
+    // Input handling
+    void handleDrag(AInputEvent *event);
+    void handlePinch(AInputEvent *event);
+    inline void transformPosition(Vec2 &v1, Vec2 &v2);
 
-    bool initialized_resources_;
-    bool has_focus_;
-    ndk_helper::DoubletapDetector doubletap_detector_;
-    ndk_helper::PinchDetector pinch_detector_;
+    bool initialized;
+    bool focused;
 
-    ndk_helper::DragDetector drag_detector_;
+    android_app* app;
 
-    ndk_helper::PerfMonitor monitor_;
+    TapCamera tapCamera;
+    GLContext glContext;
+    Clock engineClock;
 
-    ndk_helper::TapCamera tap_camera_;
-    android_app *app;
-    ASensorManager *sensor_manager_;
+    TexturedTeapotRenderer teapotRender;
 
-    const ASensor *accelerometer_sensor_;
+    ndk_helper::DoubletapDetector doubletapDetector;
+    ndk_helper::DragDetector dragDetector;
+    ndk_helper::PinchDetector pinchDetector;
 
-    ASensorEventQueue *sensor_event_queue_;
+    ndk_helper::SensorManager sensorManager;
 };
 
 #endif //MACE_ENGINE_H

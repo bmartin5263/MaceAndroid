@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-//--------------------------------------------------------------------------------
-// Teapot Renderer.h
-// Renderer for teapots
-//--------------------------------------------------------------------------------
 #ifndef _TEAPOTRENDERER_H
 #define _TEAPOTRENDERER_H
 
-//--------------------------------------------------------------------------------
-// Include files
-//--------------------------------------------------------------------------------
 #include <jni.h>
 #include <errno.h>
 
@@ -41,61 +34,67 @@
 
 #define BUFFER_OFFSET(i) ((char*)NULL + (i))
 
-struct TEAPOT_VERTEX {
-  float pos[3];
-  float normal[3];
+struct TeapotVertex {
+    float pos[3];
+    float normal[3];
 };
 
-enum SHADER_ATTRIBUTES {
-  ATTRIB_VERTEX,
-  ATTRIB_NORMAL,
-  ATTRIB_UV,
+enum ShaderAttributes {
+    ATTRIB_VERTEX,
+    ATTRIB_NORMAL,
+    ATTRIB_UV,
 };
 
-struct SHADER_PARAMS {
-  GLuint program_;
-  GLuint light0_;
-  GLuint material_diffuse_;
-  GLuint material_ambient_;
-  GLuint material_specular_;
+struct ShaderParams {
+    GLuint program;
+    GLuint light0;
+    GLuint materialDiffuse;
+    GLuint materialAmbient;
+    GLuint materialSpecular;
 
-  GLuint matrix_projection_;
-  GLuint matrix_view_;
+    GLuint matrixProjection;
+    GLuint matrixView;
 };
 
-struct TEAPOT_MATERIALS {
-  float diffuse_color[3];
-  float specular_color[4];
-  float ambient_color[3];
+struct TeapotMaterials {
+    float diffuseColor[3];
+    float specularColor[4];
+    float ambientColor[3];
 };
 
 class TeapotRenderer {
+public:
+    TeapotRenderer() = default;
+    virtual ~TeapotRenderer();
+
+    virtual void init(AAssetManager *amgr) = 0;
+    virtual GLint getTextureType() = 0;
+
+    virtual void render();
+    virtual void unload();
+
+    void update(float dTime);
+    void bind(TapCamera* camera);
+    void updateViewport();
+
 protected:
-  int32_t num_indices_;
-  int32_t num_vertices_;
-  GLuint ibo_;
-  GLuint vbo_;
+    static bool LoadShaders(ShaderParams* params, const char* strVsh, const char* strFsh);
 
-  SHADER_PARAMS shader_param_;
-  bool LoadShaders(SHADER_PARAMS* params, const char* strVsh,
-                   const char* strFsh);
+    void init();
 
-  ndk_helper::Mat4 mat_projection_;
-  ndk_helper::Mat4 mat_view_;
-  ndk_helper::Mat4 mat_model_;
+    int32_t numIndices;
+    int32_t numVertices;
 
-  ndk_helper::TapCamera* camera_;
-  void Init();
- public:
-  TeapotRenderer();
-  virtual ~TeapotRenderer();
-  virtual void Init(AAssetManager* amgr) = 0;
-  virtual GLint GetTextureType(void) = 0;
-  virtual void Render();
-  void Update(float dTime);
-  bool Bind(ndk_helper::TapCamera* camera);
-  virtual void Unload();
-  void UpdateViewport();
+    GLuint ibo;
+    GLuint vbo;
+
+    ShaderParams shaderParams;
+
+    Mat4 projection;
+    Mat4 view;
+    Mat4 model;
+
+    TapCamera* camera;
 };
 
 #endif

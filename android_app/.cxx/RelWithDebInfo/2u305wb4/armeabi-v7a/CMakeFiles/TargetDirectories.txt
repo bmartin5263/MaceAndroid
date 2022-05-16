@@ -1,7 +1,0 @@
-/Users/brandon/Projects/Mace/textured-teapot/.cxx/RelWithDebInfo/2u305wb4/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/textured-teapot/.cxx/RelWithDebInfo/2u305wb4/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/textured-teapot/.cxx/RelWithDebInfo/2u305wb4/armeabi-v7a/CMakeFiles/TexturedTeapotNativeActivity.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/NdkHelper.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/native_app_glue.dir

@@ -35,22 +35,22 @@ if ((NOT EXISTS ${commonDir}/stb) OR
                     WORKING_DIRECTORY ${commonDir})
 endif()
 
-# ndkHelperSrc = common/ndk_helper
-get_filename_component(ndkHelperSrc ${commonDir}/ndk_helper ABSOLUTE)
+## ndkHelperSrc = common/ndk_helper
+#get_filename_component(ndkHelperSrc ${commonDir}/ndk_helper ABSOLUTE)
+#
+## build the ndk-helper library, additional directory must be specified
+#add_subdirectory(${ndkHelperSrc}
+#  ${commonDir}/ndkHelperBin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
-# build the ndk-helper library, additional directory must be specified
-add_subdirectory(${ndkHelperSrc}
-  ${commonDir}/ndkHelperBin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
-
-get_filename_component(engineSrc ${engineDir}/src ABSOLUTE)
-add_subdirectory(${engineSrc}
-  ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
+#get_filename_component(engineSrc ${engineDir}/src ABSOLUTE)
+#add_subdirectory(${engineSrc}
+#  ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 get_filename_component(androidEngineSrc ${androidEngineDir}/src ABSOLUTE)
 add_subdirectory(${androidEngineSrc}
   ${androidEngineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
-get_filename_component(gameSrc ${gameDir}/src ABSOLUTE)
+get_filename_component(gameSrc ${gameDir} ABSOLUTE)
 add_subdirectory(${gameSrc}
   ${gameDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
@@ -59,7 +59,7 @@ add_library(${PROJECT_NAME}
   SHARED
     Engine.cpp
     TeapotRenderer.cpp
-    TexturedTeapotRender.cpp
+    TexturedTeapotRenderer.cpp
     Texture.cpp
     AssetUtil.cpp
 )
@@ -82,4 +82,4 @@ set_target_properties(${PROJECT_NAME}
   PROPERTIES  LINK_FLAGS "-u ANativeActivity_onCreate")
 
 # add lib dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE NdkHelper)
+target_link_libraries(${PROJECT_NAME} PRIVATE android_engine)

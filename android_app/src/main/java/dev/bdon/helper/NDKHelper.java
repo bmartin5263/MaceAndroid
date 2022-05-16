@@ -56,7 +56,7 @@ public class NDKHelper {
             Log.e("NDKHelper",
                     "--------------------------------------------\n"
                             + ".so has not been loaded. To use JUI helper, please initialize with \n"
-                            + "NDKHelper::Init( ANativeActivity* activity, const char* helper_class_name, const char* native_soname);\n"
+                            + "NDKHelper::init( ANativeActivity* activity, const char* helper_class_name, const char* native_soname);\n"
                             + "--------------------------------------------\n");
             return false;
         } else

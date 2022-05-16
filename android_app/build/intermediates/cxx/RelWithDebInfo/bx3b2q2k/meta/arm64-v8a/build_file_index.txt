@@ -1,2 +1,0 @@
-/Users/brandon/Projects/Mace/app/src/main/cpp/CMakeLists.txt
-/Users/brandon/Projects/Mace/common/ndk_helper/CMakeLists.txt

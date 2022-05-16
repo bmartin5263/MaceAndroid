@@ -1,7 +1,0 @@
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/app/.cxx/RelWithDebInfo/bx3b2q2k/armeabi-v7a/CMakeFiles/SpacegameActivity.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/edit_cache.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/NdkHelper.dir
-/Users/brandon/Projects/Mace/common/ndkHelperBin/RelWithDebInfo/armeabi-v7a/CMakeFiles/native_app_glue.dir

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Mace.iml" filepath="$PROJECT_DIR$/.idea/modules/Mace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android_app/Mace.android_app.iml" filepath="$PROJECT_DIR$/.idea/modules/android_app/Mace.android_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android_engine/Mace.android_engine.iml" filepath="$PROJECT_DIR$/.idea/modules/android_engine/Mace.android_engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/Mace.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/Mace.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/engine/Mace.engine.iml" filepath="$PROJECT_DIR$/.idea/modules/engine/Mace.engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/game/Mace.game.iml" filepath="$PROJECT_DIR$/.idea/modules/game/Mace.game.iml" />
+    </modules>
+  </component>
+</project>
