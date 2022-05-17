@@ -77,7 +77,7 @@ private:
     int32_t depthSize;
 
     // Flags
-    bool initialized;
+    bool valid;
     float glVersion;
 
     void terminate();

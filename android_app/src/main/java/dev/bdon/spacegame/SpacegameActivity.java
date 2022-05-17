@@ -72,14 +72,12 @@ public class SpacegameActivity extends NativeActivity {
 
     @SuppressLint("InflateParams")
     public void showUI() {
-        Log.i("native-activity", "ENTER showUI");
         if (popupWindow != null) {
             Log.i("native-activity", "popupWindow != null");
             return;
         }
         activity = this;
         this.runOnUiThread(this::createPopupUi);
-        Log.i("native-activity", "LEAVE showUI");
     }
 
     @SuppressLint("DefaultLocale")

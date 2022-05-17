@@ -22,9 +22,13 @@ add_library( # Sets the name of the library.
 
         # Provides a relative path to your source file(s).
         MyEngine.cpp
-        graphics/Graphics.cpp
         Clock.cpp
-        )
+        EventSystem.cpp
+
+        engine/EngineImpl.cpp
+        events/Event.cpp
+        graphics/Graphics.cpp
+)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

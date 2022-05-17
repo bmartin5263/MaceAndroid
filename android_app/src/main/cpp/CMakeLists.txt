@@ -62,6 +62,7 @@ add_library(${PROJECT_NAME}
     TexturedTeapotRenderer.cpp
     Texture.cpp
     AssetUtil.cpp
+    AndroidMain.cpp
 )
 set_target_properties(${PROJECT_NAME}
   PROPERTIES

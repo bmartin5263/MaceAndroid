@@ -38,6 +38,7 @@ add_library( # Sets the name of the library.
     TapCamera.cpp
     vecmath.cpp
     AndroidEngine.cpp
+    AndroidLog.cpp
 )
 
 # Searches for a specified prebuilt library and stores the path as a

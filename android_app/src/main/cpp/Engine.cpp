@@ -16,6 +16,7 @@
 
 #include "Engine.h"
 #include "MyEngine.h"
+#include "Log.h"
 
 Engine::Engine(android_app* app):
     initialized(false),
@@ -42,7 +43,7 @@ void Engine::unloadResources() {
  */
 int Engine::initWindow(android_app* app) {
     if (!initialized) {
-        LOGI("Engine::initWindow initializing resources");
+        LOGW("Engine::initWindow initializing resources");
         glContext.init(app->window);
         loadResources();
         initialized = true;
@@ -50,7 +51,7 @@ int Engine::initWindow(android_app* app) {
     else if (app->window != glContext.getANativeWindow()) {
         // Re-initialize ANativeWindow.
         // On some devices, ANativeWindow is re-created when the app is resumed
-        LOGI("Engine::initWindow reinitializing resources");
+        LOGW("Engine::initWindow reinitializing resources");
         assert(glContext.getANativeWindow());
         unloadResources();
         glContext.invalidate();
@@ -60,7 +61,7 @@ int Engine::initWindow(android_app* app) {
         initialized = true;
     } else {
         // initialize OpenGL ES and EGL
-        LOGI("Engine::initWindow resuming");
+        LOGW("Engine::initWindow resuming");
         if (EGL_SUCCESS == glContext.resume(app->window)) {
             unloadResources();
             loadResources();
@@ -127,8 +128,7 @@ void Engine::termWindow() {
 }
 
 void Engine::trimMemory() {
-    LOGE("Trimming memory");
-    glContext.invalidate();
+    Log::Error("Trimming memory");
 }
 
 void Engine::handleDrag(AInputEvent* event) {
@@ -214,6 +214,8 @@ void Engine::showUI() {
 
     app->activity->vm->DetachCurrentThread();
 }
+
+const char* HELPER_CLASS_NAME = "dev/bdon/helper/NDKHelper";
 
 void Engine::run() {
     ndk_helper::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
@@ -359,16 +361,4 @@ int32_t Engine::handleInputEvent(android_app *app, AInputEvent *event) {
         return 1;
     }
     return 0;
-}
-
-/**
- * This is the main entry point of a native application that is using
- * android_native_app_glue.  It runs in its own thread, with its own
- * event loop for receiving input events and doing other things.
- */
-void android_main(android_app* app) {
-    LOGI("android_main()");
-    MyEngine myEngine{app};
-    Engine engine{app};
-    engine.run();
 }

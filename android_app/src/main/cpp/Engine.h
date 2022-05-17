@@ -16,8 +16,6 @@
 #include "TexturedTeapotRenderer.h"
 #include "NDKHelper.h"
 
-const char* HELPER_CLASS_NAME = "dev/bdon/helper/NDKHelper";
-
 class Engine {
 public:
     explicit Engine(android_app *app);

@@ -20,32 +20,36 @@
 #include <unistd.h>
 
 #include "gl3stub.h"
+#include "Log.h"
 
 GLContext::GLContext():
-        window(nullptr),
-        display(EGL_NO_DISPLAY),
-        surface(EGL_NO_SURFACE),
-        context(EGL_NO_CONTEXT),
-        width(0),
-        height(0),
-        initialized(false)
+    window(nullptr),
+    display(EGL_NO_DISPLAY),
+    surface(EGL_NO_SURFACE),
+    context(EGL_NO_CONTEXT),
+    width(0),
+    height(0),
+    valid(false)
 {}
 
 GLContext::~GLContext() {
+    Log::Warn("~GLContext()");
     terminate();
 }
 
 void GLContext::init(ANativeWindow* window) {
-    if (initialized) {
+    Log::Warn("GLContext::init()");
+    if (valid) {
         return;
     }
     this->window = window;
     initEGLSurface();
     initEGLContext();
-    initialized = true;
+    valid = true;
 }
 
 void GLContext::initEGLSurface() {
+    Log::Warn("GLContext::initEGLSurface()");
     display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(display, nullptr, nullptr);
 
@@ -107,6 +111,7 @@ void GLContext::initEGLSurface() {
 }
 
 void GLContext::initEGLContext() {
+    Log::Warn("GLContext::initEGLContext()");
     const EGLint context_attribs[] = {
             EGL_CONTEXT_CLIENT_VERSION, 3,  // Request opengl ES2.0
             EGL_NONE                        // done
@@ -138,6 +143,7 @@ EGLint GLContext::swap() {
 }
 
 void GLContext::terminate() {
+    Log::Warn("GLContext::terminate()");
     if (display != EGL_NO_DISPLAY) {
         eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (context != EGL_NO_CONTEXT) {
@@ -157,7 +163,8 @@ void GLContext::terminate() {
 }
 
 EGLint GLContext::resume(ANativeWindow* window) {
-    if (!initialized) {
+    Log::Warn("GLContext::resume()");
+    if (!valid) {
         init(window);
         return EGL_SUCCESS;
     }
@@ -198,13 +205,18 @@ EGLint GLContext::resume(ANativeWindow* window) {
 
 void GLContext::suspend() {
     if (surface != EGL_NO_SURFACE) {
+        Log::Warn("GLContext::suspend()");
         eglDestroySurface(display, surface);
         surface = EGL_NO_SURFACE;
+    }
+    else {
+        Log::Warn("GLContext::suspend() - no surface");
     }
 }
 
 bool GLContext::invalidate() {
+    Log::Warn("GLContext::invalidate()");
     terminate();
-    initialized = false;
+    valid = false;
     return true;
 }
