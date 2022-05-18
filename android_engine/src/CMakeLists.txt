@@ -39,7 +39,12 @@ add_library( # Sets the name of the library.
         vecmath.cpp
         AndroidEngine.cpp
         AndroidLog.cpp
-        )
+        Texture.cpp
+        AssetUtil.cpp
+        Engine.cpp
+        TeapotRenderer.cpp
+        TexturedTeapotRenderer.cpp
+)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -67,7 +72,11 @@ set_target_properties(
         INTERFACE_INCLUDE_DIRECTORIES $<TARGET_PROPERTY:android_engine,INCLUDE_DIRECTORIES>
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${engineDir}/src)
+target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
+
+get_filename_component(commonDir ${CMAKE_CURRENT_SOURCE_DIR}/../../common ABSOLUTE)
+target_include_directories(${PROJECT_NAME} PRIVATE ${commonDir})
+
 
 target_link_libraries(android_engine PUBLIC
         native_app_glue

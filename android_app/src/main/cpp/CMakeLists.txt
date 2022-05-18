@@ -57,11 +57,6 @@ add_subdirectory(${gameSrc}
 # now build app's shared lib
 add_library(${PROJECT_NAME}
   SHARED
-    Engine.cpp
-    TeapotRenderer.cpp
-    TexturedTeapotRenderer.cpp
-    Texture.cpp
-    AssetUtil.cpp
     AndroidMain.cpp
 )
 set_target_properties(${PROJECT_NAME}
@@ -70,10 +65,10 @@ set_target_properties(${PROJECT_NAME}
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
 )
-target_include_directories(${PROJECT_NAME} PRIVATE ${commonDir})
-target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
+#target_include_directories(${PROJECT_NAME} PRIVATE ${commonDir})
+#target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
 target_include_directories(${PROJECT_NAME} PRIVATE ${androidEngineDir}/src)
-target_include_directories(${PROJECT_NAME} PRIVATE ${gameDir}/src)
+#target_include_directories(${PROJECT_NAME} PRIVATE ${gameDir}/src)
 
 target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-function)
 
@@ -83,4 +78,4 @@ set_target_properties(${PROJECT_NAME}
   PROPERTIES  LINK_FLAGS "-u ANativeActivity_onCreate")
 
 # add lib dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE engine)
+target_link_libraries(${PROJECT_NAME} PUBLIC engine)
