@@ -4,6 +4,7 @@
 
 #include "EngineImpl.h"
 #include "../EventSystem.h"
+#include "../Log.h"
 
 void EngineImpl::launch() {
     update();
@@ -11,11 +12,11 @@ void EngineImpl::launch() {
 }
 
 void EngineImpl::update() {
-
+    Log::Error("EngineImpl::update()");
 }
 
 void EngineImpl::draw() {
-
+    Log::Error("EngineImpl::draw()");
 }
 
 bool EngineImpl::isRunning() {

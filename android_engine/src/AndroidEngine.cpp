@@ -5,7 +5,9 @@
 #ifdef __ANDROID__
 #include "JNIHelper.h"
 #include "MyEngine.h"
+#include "engine/EngineImpl.h"
 #include "EventSystem.h"
+#include "Log.h"
 
 void onAppCmd(android_app* app, int32_t cmd) {
     Event event{};
@@ -46,7 +48,12 @@ void onAppCmd(android_app* app, int32_t cmd) {
 }
 
 void MyEngine::Init(android_app *app) {
-
+    Instance().init(app);
 }
+
+void EngineImpl::init(android_app *app) {
+    Log::Error("AndroidEngineImpl::init()");
+}
+
 
 #endif

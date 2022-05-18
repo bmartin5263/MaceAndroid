@@ -82,13 +82,9 @@ public class SpacegameActivity extends NativeActivity {
 
     @SuppressLint("DefaultLocale")
     public void updateFPS(final float fFPS) {
-        Log.i("native-activity", "updateFPS");
         if (fpsLabel != null) {
             activity = this;
             this.runOnUiThread(() -> fpsLabel.setText(String.format("%2.2f FPS", fFPS)));
-        }
-        else {
-            Log.i("native-activity", "fpsLabel is null");
         }
     }
 

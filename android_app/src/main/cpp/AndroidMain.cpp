@@ -15,7 +15,7 @@
 void android_main(android_app* app) {
     LOGI("android_main()");
     MyEngine::Init(app);
-//    MyEngine::Launch();
+    MyEngine::Launch();
 
     Engine engine{app};
     engine.run();
