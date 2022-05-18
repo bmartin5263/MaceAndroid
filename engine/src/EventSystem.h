@@ -11,11 +11,11 @@
 
 class EventSystem {
 public:
-    static void PushEvent(const Event& event) { instance().pushEvent(event); };
+    static void PushEvent(const Event& event);
     void pushEvent(const Event& event);
 
 private:
-    static EventSystem& instance();
+    static EventSystem& Instance();
 
     std::queue<Event> eventQueue;
 };

@@ -83,4 +83,4 @@ set_target_properties(${PROJECT_NAME}
   PROPERTIES  LINK_FLAGS "-u ANativeActivity_onCreate")
 
 # add lib dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE engine android_engine)
+target_link_libraries(${PROJECT_NAME} PRIVATE engine)

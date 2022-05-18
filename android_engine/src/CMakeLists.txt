@@ -23,23 +23,23 @@ add_subdirectory(${engineSrc}
         ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 add_library( # Sets the name of the library.
-    android_engine
+        android_engine
 
-    # Sets the library as a shared library.
-    SHARED
+        # Sets the library as a shared library.
+        STATIC
 
-    GestureDetector.cpp
-    JNIHelper.cpp
-    gl3stub.cpp
-    GLContext.cpp
-    Interpolator.cpp
-    SensorManager.cpp
-    Shader.cpp
-    TapCamera.cpp
-    vecmath.cpp
-    AndroidEngine.cpp
-    AndroidLog.cpp
-)
+        GestureDetector.cpp
+        JNIHelper.cpp
+        gl3stub.cpp
+        GLContext.cpp
+        Interpolator.cpp
+        SensorManager.cpp
+        Shader.cpp
+        TapCamera.cpp
+        vecmath.cpp
+        AndroidEngine.cpp
+        AndroidLog.cpp
+        )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -59,20 +59,17 @@ add_library( # Sets the name of the library.
 # build script, prebuilt third-party libraries, or system libraries.
 
 set_target_properties(
-    android_engine
-    PROPERTIES
+        android_engine
+        PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
         INTERFACE_INCLUDE_DIRECTORIES $<TARGET_PROPERTY:android_engine,INCLUDE_DIRECTORIES>
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
+target_include_directories(${PROJECT_NAME} PUBLIC ${engineDir}/src)
 
-target_link_libraries(
-    android_engine
-    PUBLIC
-        engine
+target_link_libraries(android_engine PUBLIC
         native_app_glue
         GLESv3
         EGL
