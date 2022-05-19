@@ -2,7 +2,7 @@
 // Created by Brandon on 5/16/22.
 //
 
-#include "Log.h"
+#include "mace/Log.h"
 
 #ifdef __ANDROID__
 #include "JNIHelper.h"

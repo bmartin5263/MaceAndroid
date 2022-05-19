@@ -15,6 +15,8 @@
  */
 
 #include "TexturedTeapotRenderer.h"
+#include "mace/graphics/gl3stub.h"
+#include <cassert>
 
 /**
  * Texture Coordinators for 2D texture:

@@ -4,23 +4,29 @@
 
 #ifdef __ANDROID__
 #include "JNIHelper.h"
-#include "MyEngine.h"
-#include "engine/EngineImpl.h"
-#include "engine/DeviceEngine.h"
-#include "EventSystem.h"
-#include "Log.h"
+#include "mace/MyEngine.h"
+#include "mace/engine/EngineImpl.h"
+#include "mace/engine/DeviceEngine.h"
+#include "mace/EventSystem.h"
+#include "mace/Log.h"
 
 DeviceEngine::DeviceEngine(android_app *androidApp):
-    androidApp(androidApp)
+    app(androidApp)
 {
     Log::Error("AndroidEngine()");
 }
 
 void DeviceEngine::launch(EngineImpl *engine) {
     Log::Error("AndroidEngine::launch()");
-    doubletapDetector.setConfiguration(this->androidApp->config);
-    dragDetector.setConfiguration(this->androidApp->config);
-    pinchDetector.setConfiguration(this->androidApp->config);
+    doubletapDetector.setConfiguration(this->app->config);
+    dragDetector.setConfiguration(this->app->config);
+    pinchDetector.setConfiguration(this->app->config);
+//    ndk_helper::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
+//
+//    app->userData = this;
+//    app->onAppCmd = Engine::OnAppCmd;
+//    app->onInputEvent = Engine::OnInputEvent;
+//    sensorManager.init(app);
 }
 
 void onAppCmd(android_app* app, int32_t cmd) {

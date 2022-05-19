@@ -24,13 +24,13 @@
 
 #include <EGL/egl.h>
 #include <GLES/gl.h>
+#include <mace/math/vecmath.h>
+#include <android/asset_manager.h>
 
 //#include <android/sensor.h>
 //#include <android/log.h>
 //#include <android_native_app_glue.h>
 //#include <android/native_window_jni.h>
-
-#include "../../../android_engine/src/NDKHelper.h"
 
 #define BUFFER_OFFSET(i) ((char*)NULL + (i))
 
@@ -62,6 +62,7 @@ struct TeapotMaterials {
     float ambientColor[3];
 };
 
+class TapCamera;
 class TeapotRenderer {
 public:
     TeapotRenderer() = default;

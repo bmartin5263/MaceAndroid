@@ -46,7 +46,7 @@ endif()
 #add_subdirectory(${engineSrc}
 #  ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
-get_filename_component(androidEngineSrc ${androidEngineDir}/src ABSOLUTE)
+get_filename_component(androidEngineSrc ${androidEngineDir}/src/cpp ABSOLUTE)
 add_subdirectory(${androidEngineSrc}
   ${androidEngineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
@@ -67,7 +67,7 @@ set_target_properties(${PROJECT_NAME}
 )
 #target_include_directories(${PROJECT_NAME} PRIVATE ${commonDir})
 #target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
-target_include_directories(${PROJECT_NAME} PRIVATE ${androidEngineDir}/src)
+target_include_directories(${PROJECT_NAME} PRIVATE ${androidEngineDir}/src/cpp)
 #target_include_directories(${PROJECT_NAME} PRIVATE ${gameDir}/src)
 
 target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-function)

@@ -26,7 +26,11 @@
 //--------------------------------------------------------------------------------
 // Teapot model data
 //--------------------------------------------------------------------------------
-#include "../../../android_engine/src/teapot.inl"
+#include "../../../../android_engine/src/cpp/mace/ndk/teapot.inl"
+#include "mace/graphics/gl3stub.h"
+#include <cassert>
+#include <mace/graphics/Shader.h>
+#include "TapCamera.h"
 
 //--------------------------------------------------------------------------------
 // Dtor

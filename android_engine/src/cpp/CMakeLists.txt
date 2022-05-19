@@ -17,9 +17,9 @@ android_ndk_import_module_native_app_glue()
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-get_filename_component(engineDir ${CMAKE_CURRENT_SOURCE_DIR}/../../engine ABSOLUTE)
+get_filename_component(engineDir ../../../engine ABSOLUTE)
 get_filename_component(engineSrc ${engineDir}/src ABSOLUTE)
-add_subdirectory(${engineSrc}
+add_subdirectory(${engineSrc}/mace
         ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 add_library( # Sets the name of the library.
@@ -28,13 +28,13 @@ add_library( # Sets the name of the library.
         # Sets the library as a shared library.
         STATIC
 
-        GestureDetector.cpp
-        JNIHelper.cpp
-        SensorManager.cpp
-        AndroidEngine.cpp
-        AndroidLog.cpp
-        AssetUtil.cpp
-        Engine.cpp
+        mace/ndk/GestureDetector.cpp
+        mace/ndk/JNIHelper.cpp
+        mace/ndk/SensorManager.cpp
+        mace/ndk/AndroidEngine.cpp
+        mace/ndk/AndroidLog.cpp
+        mace/ndk/AssetUtil.cpp
+        mace/ndk/Engine.cpp
 )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -65,7 +65,7 @@ set_target_properties(
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${engineDir}/src)
 
-get_filename_component(commonDir ${CMAKE_CURRENT_SOURCE_DIR}/../../common ABSOLUTE)
+get_filename_component(commonDir ../../../common ABSOLUTE)
 target_include_directories(${PROJECT_NAME} PRIVATE ${commonDir})
 
 

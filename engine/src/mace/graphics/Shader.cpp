@@ -18,7 +18,7 @@
 #include <GLES2/gl2.h>
 
 #include "Shader.h"
-#include "../../../android_engine/src/JNIHelper.h"
+#include "../../../../android_engine/src/cpp/mace/ndk/JNIHelper.h"
 
 namespace ndk_helper {
 

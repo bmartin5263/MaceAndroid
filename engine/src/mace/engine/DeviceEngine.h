@@ -7,7 +7,7 @@
 
 #ifdef __ANDROID__
 #include <android_native_app_glue.h>
-#include "../../../android_engine/src/NDKHelper.h"
+#include "../../../../android_engine/src/cpp/mace/ndk/NDKHelper.h"
 #endif
 
 class DeviceEngine {
@@ -18,7 +18,7 @@ public:
 public:
     DeviceEngine(android_app* androidApp);
 private:
-    android_app* androidApp;
+    android_app* app;
     ndk_helper::DoubletapDetector doubletapDetector;
     ndk_helper::DragDetector dragDetector;
     ndk_helper::PinchDetector pinchDetector;

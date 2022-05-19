@@ -20,8 +20,8 @@
 #include <jni.h>
 #include <errno.h>
 #include <time.h>
-#include "../../../android_engine/src/JNIHelper.h"
-#include "Clock.h"
+#include "../../../../android_engine/src/cpp/mace/ndk/JNIHelper.h"
+#include "mace/Clock.h"
 #include <list>
 
 namespace ndk_helper {

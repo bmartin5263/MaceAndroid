@@ -4,8 +4,8 @@
 
 #include <android_native_app_glue.h>
 #include <android/log.h>
-#include "Engine.h"
-#include "MyEngine.h"
+#include "mace/ndk/Engine.h"
+#include "mace/MyEngine.h"
 
 /**
  * This is the main entry point of a native application that is using

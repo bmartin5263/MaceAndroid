@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include "gl3stub.h"
-#include "Log.h"
+#include "mace/Log.h"
 
 GLContext::GLContext():
     window(nullptr),

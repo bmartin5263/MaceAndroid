@@ -6,7 +6,7 @@
 #define MACE_EVENTSYSTEM_H
 
 #include <queue>
-#include "events/Event.h"
+#include "mace/events/Event.h"
 
 
 class EventSystem {

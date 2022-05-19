@@ -9,11 +9,11 @@
 struct android_app;
 #endif
 
-#include "graphics/GLContext.h"
-#include "Clock.h"
-#include "rendering/TexturedTeapotRenderer.h"
-#include "rendering/TapCamera.h"
-#include "EventSystem.h"
+#include "mace/graphics/GLContext.h"
+#include "mace/Clock.h"
+#include "mace/rendering/TexturedTeapotRenderer.h"
+#include "mace/rendering/TapCamera.h"
+#include "mace/EventSystem.h"
 
 class DeviceEngine;
 class EngineImpl {

@@ -3,8 +3,8 @@
 //
 
 #include "MyEngine.h"
-#include "engine/EngineImpl.h"
-#include "engine/DeviceEngine.h"
+#include "mace/engine/EngineImpl.h"
+#include "mace/engine/DeviceEngine.h"
 
 DeviceEngine* MyEngine::deviceEngine;
 

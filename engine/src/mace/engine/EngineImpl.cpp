@@ -4,8 +4,8 @@
 
 #include "EngineImpl.h"
 #include "DeviceEngine.h"
-#include "../EventSystem.h"
-#include "../Log.h"
+#include "mace/EventSystem.h"
+#include "mace/Log.h"
 
 EngineImpl::EngineImpl(std::unique_ptr<DeviceEngine> deviceEngine):
     deviceEngine{std::move(deviceEngine)}, eventSystem{}, tapCamera{}, glContext{},

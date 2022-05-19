@@ -15,8 +15,8 @@
  */
 
 #include "Engine.h"
-#include "MyEngine.h"
-#include "Log.h"
+#include "mace/MyEngine.h"
+#include "mace/Log.h"
 
 Engine::Engine(android_app* app):
     initialized(false),
