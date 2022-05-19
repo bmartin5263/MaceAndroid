@@ -30,20 +30,11 @@ add_library( # Sets the name of the library.
 
         GestureDetector.cpp
         JNIHelper.cpp
-        gl3stub.cpp
-        GLContext.cpp
-        Interpolator.cpp
         SensorManager.cpp
-        Shader.cpp
-        TapCamera.cpp
-        vecmath.cpp
         AndroidEngine.cpp
         AndroidLog.cpp
-        Texture.cpp
         AssetUtil.cpp
         Engine.cpp
-        TeapotRenderer.cpp
-        TexturedTeapotRenderer.cpp
 )
 
 # Searches for a specified prebuilt library and stores the path as a

@@ -9,13 +9,16 @@
 struct android_app;
 #endif
 
-#include "../EventSystem.h"
+#include "graphics/GLContext.h"
+#include "Clock.h"
+#include "rendering/TexturedTeapotRenderer.h"
+#include "rendering/TapCamera.h"
+#include "EventSystem.h"
 
+class DeviceEngine;
 class EngineImpl {
 public:
-#ifdef __ANDROID__
-    void init(android_app* app);
-#endif
+    explicit EngineImpl(std::unique_ptr<DeviceEngine> deviceEngine);
     void launch();
 
     EventSystem& getEventSystem();
@@ -25,7 +28,14 @@ private:
     void draw();
     bool isRunning();
 
+    std::unique_ptr<DeviceEngine> deviceEngine;
     EventSystem eventSystem;
+
+    TapCamera tapCamera;
+    GLContext glContext;
+    Clock engineClock;
+
+    TexturedTeapotRenderer teapotRender;
 
 };
 

@@ -11,11 +11,13 @@
 
 class EngineImpl;
 class EventSystem;
+class DeviceEngine;
 class MyEngine {
 public:
 #ifdef __ANDROID__
     static void Init(android_app* app);
 #endif
+
     static void Launch();
     static EventSystem& EventSystem();
 
@@ -33,12 +35,13 @@ public:
      */
 
 private:
-    MyEngine() = default;
-    MyEngine(MyEngine& other) = default;
-    MyEngine& operator=(MyEngine& other) = default;
-    ~MyEngine() = default;
-
     static EngineImpl& Instance();
+    static DeviceEngine* deviceEngine;
+
+    MyEngine() = delete;
+    MyEngine(MyEngine& other) = delete;
+    MyEngine& operator=(MyEngine& other) = delete;
+    ~MyEngine() = delete;
 };
 
 #endif //MACE_MYENGINE_H

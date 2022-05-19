@@ -17,7 +17,7 @@
 #ifndef TEAPOTS_TEXTUREDTEAPOTRENDER_H
 #define TEAPOTS_TEXTUREDTEAPOTRENDER_H
 #include "TeapotRenderer.h"
-#include "Texture.h"
+#include "graphics/Texture.h"
 /**
  *  class TextureTeapotRender
  *    adding texture into teapot

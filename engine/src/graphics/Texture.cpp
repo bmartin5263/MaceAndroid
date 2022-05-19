@@ -19,10 +19,10 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
-#include "AssetUtil.h"
+#include "../../../android_engine/src/AssetUtil.h"
 
 #define MODULE_NAME "Teapot::Texture"
-#include "android_debug.h"
+#include "../../../android_engine/src/android_debug.h"
 
 /**
  * Cubemap and Texture2d implementations for Class Texture.

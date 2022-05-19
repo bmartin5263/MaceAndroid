@@ -17,7 +17,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "vecmath.h"
+#include "math/vecmath.h"
 
 /******************************************************************
  * Camera control helper class with a tap gesture

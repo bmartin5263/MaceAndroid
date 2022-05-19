@@ -13,7 +13,7 @@
 #include <android_native_app_glue.h>
 #include <android/native_window_jni.h>
 
-#include "TexturedTeapotRenderer.h"
+#include "rendering/TexturedTeapotRenderer.h"
 #include "NDKHelper.h"
 
 class Engine {
@@ -63,7 +63,6 @@ private:
     ndk_helper::DoubletapDetector doubletapDetector;
     ndk_helper::DragDetector dragDetector;
     ndk_helper::PinchDetector pinchDetector;
-
     ndk_helper::SensorManager sensorManager;
 };
 

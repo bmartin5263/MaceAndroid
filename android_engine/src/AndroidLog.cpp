@@ -27,7 +27,7 @@ void Log::Warn(const char *fmt, ...) {
     __android_log_print(ANDROID_LOG_WARN, ndk_helper::JNIHelper::GetInstance()->GetAppName(), "%s", fmt);
 }
 
-void Log::Warning(const char *fmt, const char *args, ...) {
+void Log::Warn(const char *fmt, const char *args, ...) {
     __android_log_print(ANDROID_LOG_WARN, ndk_helper::JNIHelper::GetInstance()->GetAppName(), fmt, args);
 }
 

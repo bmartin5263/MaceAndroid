@@ -232,21 +232,32 @@ void Engine::run() {
     while (update()) {
         draw();
     }
+
+    Log::Error("Shutdown");
 }
 
 bool Engine::update() {
     int id;
     int events;
     android_poll_source *source;
-    while ((id = ALooper_pollAll(
-            hasFocus() ? 0 : -1,
-            nullptr,
-            &events,
-            (void **) &source
-    )) >= 0)
-    {
+
+    id = ALooper_pollAll(
+        hasFocus() ? 0 : -1,
+        nullptr,
+        &events,
+        (void **) &source
+    );
+    while(id >= 0) {
+        // 1 = Command (source != null)
+        // 2 = Input Event (source != null)
+        // 3 = Clock tick?
+//        Log::Warn("Update: %d", id);
+        if (id != 3) {
+            LOGW("Update: %d", id);
+        }
         // Process this event.
         if (source != nullptr) {
+            LOGE("Source Process: %d", id);
             source->process(app, source);
         }
 
@@ -257,6 +268,12 @@ bool Engine::update() {
             termWindow();
             return false;
         }
+        id = ALooper_pollAll(
+            hasFocus() ? 0 : -1,
+            nullptr,
+            &events,
+            (void **) &source
+        );
     }
     return true;
 }

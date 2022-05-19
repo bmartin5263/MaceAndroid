@@ -18,7 +18,6 @@
 #define VECMATH_H_
 
 #include <cmath>
-//#include "JNIHelper.h"
 
 /******************************************************************
  * Helper class for vector math operations

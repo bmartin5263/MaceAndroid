@@ -6,8 +6,22 @@
 #include "JNIHelper.h"
 #include "MyEngine.h"
 #include "engine/EngineImpl.h"
+#include "engine/DeviceEngine.h"
 #include "EventSystem.h"
 #include "Log.h"
+
+DeviceEngine::DeviceEngine(android_app *androidApp):
+    androidApp(androidApp)
+{
+    Log::Error("AndroidEngine()");
+}
+
+void DeviceEngine::launch(EngineImpl *engine) {
+    Log::Error("AndroidEngine::launch()");
+    doubletapDetector.setConfiguration(this->androidApp->config);
+    dragDetector.setConfiguration(this->androidApp->config);
+    pinchDetector.setConfiguration(this->androidApp->config);
+}
 
 void onAppCmd(android_app* app, int32_t cmd) {
     Event event{};
@@ -48,12 +62,7 @@ void onAppCmd(android_app* app, int32_t cmd) {
 }
 
 void MyEngine::Init(android_app *app) {
-    Instance().init(app);
+    deviceEngine = new DeviceEngine(app);
 }
-
-void EngineImpl::init(android_app *app) {
-    Log::Error("AndroidEngineImpl::init()");
-}
-
 
 #endif

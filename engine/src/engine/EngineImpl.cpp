@@ -3,10 +3,18 @@
 //
 
 #include "EngineImpl.h"
+#include "DeviceEngine.h"
 #include "../EventSystem.h"
 #include "../Log.h"
 
+EngineImpl::EngineImpl(std::unique_ptr<DeviceEngine> deviceEngine):
+    deviceEngine{std::move(deviceEngine)}, eventSystem{}, tapCamera{}, glContext{},
+    engineClock{}, teapotRender{}
+{
+}
+
 void EngineImpl::launch() {
+
     update();
     draw();
 }

@@ -22,7 +22,7 @@
 #include <android/sensor.h>
 #include <android/log.h>
 #include "JNIHelper.h"
-#include "vecmath.h"
+#include "math/vecmath.h"
 
 namespace ndk_helper {
 

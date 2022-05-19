@@ -4,9 +4,12 @@
 
 #include "MyEngine.h"
 #include "engine/EngineImpl.h"
+#include "engine/DeviceEngine.h"
+
+DeviceEngine* MyEngine::deviceEngine;
 
 EngineImpl& MyEngine::Instance() {
-    static EngineImpl engine;   // the singleton from which all other Engine systems belong to
+    static EngineImpl engine{std::unique_ptr<DeviceEngine>(deviceEngine)};   // the singleton from which all other Engine systems belong to
     return engine;
 }
 

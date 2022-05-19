@@ -30,14 +30,14 @@
  * - Provide handy utility functions for NDK development
  * - Make NDK samples more simpler and readable
  */
-#include "gl3stub.h"    // GLES3 stubs
-#include "GLContext.h"  // EGL & OpenGL manager
-#include "Shader.h"     // Shader compiler support
-#include "vecmath.h"  // Vector math support, C++ implementation n current version
-#include "TapCamera.h"        // Tap/Pinch camera control
+#include "graphics/gl3stub.h"    // GLES3 stubs
+#include "graphics/GLContext.h"  // EGL & OpenGL manager
+#include "graphics/Shader.h"     // Shader compiler support
+#include "math/vecmath.h"  // Vector math support, C++ implementation n current version
+#include "rendering/TapCamera.h"        // Tap/Pinch camera control
 #include "JNIHelper.h"        // JNI support
 #include "GestureDetector.h"  // Tap/Doubletap/Pinch detector
 #include "Clock.h"      // FPS counter
 #include "SensorManager.h"    // SensorManager
-#include "Interpolator.h"     // Interpolator
+#include "graphics/Interpolator.h"     // Interpolator
 #endif

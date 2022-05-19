@@ -16,7 +16,7 @@ public:
     static void Info(const char* fmt, const char* args...);
 
     static void Warn(const char* fmt...);
-    static void Warning(const char* fmt, const char* args...);
+    static void Warn(const char* fmt, const char* args...);
 
     static void Error(const char* fmt...);
     static void Error(const char* fmt, const char* args...);

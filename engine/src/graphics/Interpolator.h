@@ -20,7 +20,7 @@
 #include <jni.h>
 #include <errno.h>
 #include <time.h>
-#include "JNIHelper.h"
+#include "../../../android_engine/src/JNIHelper.h"
 #include "Clock.h"
 #include <list>
 

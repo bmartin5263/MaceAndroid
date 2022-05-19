@@ -24,7 +24,7 @@
 #include <GLES2/gl2.h>
 #include <android/log.h>
 
-#include "JNIHelper.h"
+#include "../../../android_engine/src/JNIHelper.h"
 
 
 /******************************************************************

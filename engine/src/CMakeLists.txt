@@ -24,10 +24,18 @@ add_library( # Sets the name of the library.
         MyEngine.cpp
         Clock.cpp
         EventSystem.cpp
-
+        graphics/gl3stub.cpp
+        graphics/GLContext.cpp
+        graphics/Interpolator.cpp
         engine/EngineImpl.cpp
         events/Event.cpp
         graphics/Graphics.cpp
+        rendering/TeapotRenderer.cpp
+        rendering/TexturedTeapotRenderer.cpp
+        graphics/Shader.cpp
+        rendering/TapCamera.cpp
+        math/vecmath.cpp
+        graphics/Texture.cpp
 )
 
 target_link_libraries(engine android_engine)

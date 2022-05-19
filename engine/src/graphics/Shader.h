@@ -28,7 +28,7 @@
 
 #include <android/log.h>
 
-#include "JNIHelper.h"
+#include "../../../android_engine/src/JNIHelper.h"
 
 namespace ndk_helper {
 
