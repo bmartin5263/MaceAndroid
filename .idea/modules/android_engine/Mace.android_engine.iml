@@ -19,7 +19,6 @@
     <content url="file://$MODULE_DIR$/../../../android_engine">
       <excludeFolder url="file://$MODULE_DIR$/../../../android_engine/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../android_engine/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../android_engine/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

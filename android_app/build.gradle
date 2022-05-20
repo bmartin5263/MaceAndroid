@@ -20,6 +20,7 @@ android {
             cmake {
                 arguments '-DANDROID_TOOLCHAIN=clang',
                           '-DANDROID_STL=c++_static'
+                targets "engine", "android_engine", "game", "SpacegameActivity"
             }
         }
     }
@@ -33,7 +34,7 @@ android {
     externalNativeBuild {
         cmake {
             version '3.18.1'
-            path 'src/main/cpp/CMakeLists.txt'
+            path '../CMakeLists.txt'
         }
     }
 }

@@ -18,24 +18,24 @@ add_library( # Sets the name of the library.
         engine
 
         # Sets the library as a shared library.
-        SHARED
+        STATIC
 
         # Provides a relative path to your source file(s).
-        MyEngine.cpp
-        Clock.cpp
-        EventSystem.cpp
-        graphics/gl3stub.cpp
-        graphics/GLContext.cpp
-        graphics/Interpolator.cpp
-        engine/EngineImpl.cpp
-        events/Event.cpp
-        graphics/Graphics.cpp
-        rendering/TeapotRenderer.cpp
-        rendering/TexturedTeapotRenderer.cpp
-        graphics/Shader.cpp
-        rendering/TapCamera.cpp
-        math/vecmath.cpp
-        graphics/Texture.cpp
+        src/mace/MyEngine.cpp
+        src/mace/Clock.cpp
+        src/mace/EventSystem.cpp
+        src/mace/graphics/gl3stub.cpp
+        src/mace/graphics/GLContext.cpp
+        src/mace/graphics/Interpolator.cpp
+        src/mace/engine/EngineImpl.cpp
+        src/mace/events/Event.cpp
+        src/mace/graphics/Graphics.cpp
+        src/mace/rendering/TeapotRenderer.cpp
+        src/mace/rendering/TexturedTeapotRenderer.cpp
+        src/mace/graphics/Shader.cpp
+        src/mace/rendering/TapCamera.cpp
+        src/mace/math/vecmath.cpp
+        src/mace/graphics/Texture.cpp
 )
 
 target_link_libraries(engine android_engine)

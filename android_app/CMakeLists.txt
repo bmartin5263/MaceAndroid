@@ -21,10 +21,10 @@ project(SpacegameActivity LANGUAGES C CXX)
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Werror -fno-exceptions -frtti")
 
 # commonDir = common folder
-get_filename_component(commonDir ${CMAKE_CURRENT_SOURCE_DIR}/../../../../common ABSOLUTE)
-get_filename_component(engineDir ${CMAKE_CURRENT_SOURCE_DIR}/../../../../engine ABSOLUTE)
-get_filename_component(androidEngineDir ${CMAKE_CURRENT_SOURCE_DIR}/../../../../android_engine ABSOLUTE)
-get_filename_component(gameDir ${CMAKE_CURRENT_SOURCE_DIR}/../../../../game ABSOLUTE)
+get_filename_component(commonDir ../common ABSOLUTE)
+get_filename_component(engineDir ../engine ABSOLUTE)
+get_filename_component(androidEngineDir ../android_engine ABSOLUTE)
+get_filename_component(gameDir ../game ABSOLUTE)
 
 # Clone stb_image if not exists
 if ((NOT EXISTS ${commonDir}/stb) OR
@@ -47,17 +47,17 @@ endif()
 #  ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 get_filename_component(androidEngineSrc ${androidEngineDir}/src/cpp ABSOLUTE)
-add_subdirectory(${androidEngineSrc}
-  ${androidEngineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
+#add_subdirectory(${androidEngineSrc}
+#  ${androidEngineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 get_filename_component(gameSrc ${gameDir} ABSOLUTE)
-add_subdirectory(${gameSrc}
-  ${gameDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
+#add_subdirectory(${gameSrc}
+#  ${gameDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 # now build app's shared lib
 add_library(${PROJECT_NAME}
   SHARED
-    AndroidMain.cpp
+        src/main/cpp/AndroidMain.cpp
 )
 set_target_properties(${PROJECT_NAME}
   PROPERTIES
@@ -78,4 +78,4 @@ set_target_properties(${PROJECT_NAME}
   PROPERTIES  LINK_FLAGS "-u ANativeActivity_onCreate")
 
 # add lib dependencies
-target_link_libraries(${PROJECT_NAME} PUBLIC engine)
+target_link_libraries(${PROJECT_NAME} PUBLIC engine android_engine)

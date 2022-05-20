@@ -19,8 +19,8 @@ android_ndk_import_module_native_app_glue()
 
 get_filename_component(engineDir ../../../engine ABSOLUTE)
 get_filename_component(engineSrc ${engineDir}/src ABSOLUTE)
-add_subdirectory(${engineSrc}/mace
-        ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
+#add_subdirectory(${engineSrc}/mace
+#        ${engineDir}/bin/${CMAKE_BUILD_TYPE}/${ANDROID_ABI})
 
 add_library( # Sets the name of the library.
         android_engine
@@ -76,4 +76,5 @@ target_link_libraries(android_engine PUBLIC
         log
         android
         atomic
+        engine
 )

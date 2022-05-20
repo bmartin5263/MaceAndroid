@@ -18,7 +18,7 @@ add_library( # Sets the name of the library.
         game
 
         # Sets the library as a shared library.
-        SHARED
+        STATIC
 
         src/hello.cpp
         )

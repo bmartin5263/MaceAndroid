@@ -40,7 +40,11 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/res/resValues/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../android_app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
@@ -60,11 +64,8 @@
     <content url="file://$MODULE_DIR$/../../../common">
       <sourceFolder url="file://$MODULE_DIR$/../../../common" type="native-header-root" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../engine/src">
-      <sourceFolder url="file://$MODULE_DIR$/../../../engine/src" type="native-header-root" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../engine/src/mace">
-      <sourceFolder url="file://$MODULE_DIR$/../../../engine/src/mace" type="native-Source-root" />
+    <content url="file://$MODULE_DIR$/../../../engine">
+      <sourceFolder url="file://$MODULE_DIR$/../../../engine" type="native-Source-root" />
     </content>
     <content url="file://$MODULE_DIR$/../../../game">
       <sourceFolder url="file://$MODULE_DIR$/../../../game" type="native-Source-root" />
