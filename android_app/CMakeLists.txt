@@ -26,14 +26,14 @@ get_filename_component(engineDir ../engine ABSOLUTE)
 get_filename_component(androidEngineDir ../android_engine ABSOLUTE)
 get_filename_component(gameDir ../game ABSOLUTE)
 
-# Clone stb_image if not exists
-if ((NOT EXISTS ${commonDir}/stb) OR
-    (NOT EXISTS ${commonDir}/stb/stb_image.h))
-    execute_process(COMMAND git clone
-                            https://github.com/nothings/stb.git
-                            stb
-                    WORKING_DIRECTORY ${commonDir})
-endif()
+## Clone stb_image if not exists
+#if ((NOT EXISTS ${commonDir}/stb) OR
+#    (NOT EXISTS ${commonDir}/stb/stb_image.h))
+#    execute_process(COMMAND git clone
+#                            https://github.com/nothings/stb.git
+#                            stb
+#                    WORKING_DIRECTORY ${commonDir})
+#endif()
 
 ## ndkHelperSrc = common/ndk_helper
 #get_filename_component(ndkHelperSrc ${commonDir}/ndk_helper ABSOLUTE)
@@ -78,4 +78,4 @@ set_target_properties(${PROJECT_NAME}
   PROPERTIES  LINK_FLAGS "-u ANativeActivity_onCreate")
 
 # add lib dependencies
-target_link_libraries(${PROJECT_NAME} PUBLIC engine android_engine)
+target_link_libraries(${PROJECT_NAME} PUBLIC game)

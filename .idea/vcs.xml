@@ -4,5 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/common/stb" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/engine/core/libs/stb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mace/core/lib/stb" vcs="Git" />
   </component>
 </project>

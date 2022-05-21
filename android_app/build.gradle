@@ -20,7 +20,7 @@ android {
             cmake {
                 arguments '-DANDROID_TOOLCHAIN=clang',
                           '-DANDROID_STL=c++_static'
-                targets "engine", "android_engine", "game", "SpacegameActivity"
+                targets "game", "mace", "SpacegameActivity"
             }
         }
     }
