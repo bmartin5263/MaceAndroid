@@ -12,17 +12,10 @@ MACE_START
 
 class Log {
 public:
-    static void Debug(const char* fmt...);
-    static void Debug(const char* fmt, const char* args...);
-
-    static void Info(const char* fmt...);
-    static void Info(const char* fmt, const char* args...);
-
-    static void Warn(const char* fmt...);
-    static void Warn(const char* fmt, const char* args...);
-
-    static void Error(const char* fmt...);
-    static void Error(const char* fmt, const char* args...);
+    static void Debug(const char* fmt, ...);
+    static void Info(const char* fmt, ...);
+    static void Warn(const char* fmt, ...);
+    static void Error(const char* fmt, ...);
 };
 
 MACE_END

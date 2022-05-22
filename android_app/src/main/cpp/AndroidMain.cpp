@@ -7,6 +7,7 @@
 #include "OriginalEngine.h"
 #include "CoreEngine.h"
 #include "Game.h"
+#include "Log.h"
 
 /**
  * This is the main entry point of a native application that is using
@@ -14,10 +15,11 @@
  * event loop for receiving input events and doing other things.
  */
 void android_main(android_app* app) {
+    mace::Log::Info("Hello, %i", 3);
+
     Game g{};
     g.start();
 
-    LOGI("android_main()");
     mace::CoreEngine::Init(app);
     mace::CoreEngine::Launch();
 
