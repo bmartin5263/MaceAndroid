@@ -22,6 +22,8 @@
 #include "graphics/gl3stub.h"
 #include "Log.h"
 
+MACE_START
+
 GLContext::GLContext():
     window(nullptr),
     display(EGL_NO_DISPLAY),
@@ -220,3 +222,5 @@ bool GLContext::invalidate() {
     valid = false;
     return true;
 }
+
+MACE_END

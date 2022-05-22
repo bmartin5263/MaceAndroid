@@ -30,9 +30,7 @@
 
 #include "JNIHelper.h"
 
-namespace ndk_helper {
-
-namespace shader {
+MACE_START
 
 /******************************************************************
  * Shader compiler helper
@@ -114,7 +112,7 @@ bool LinkProgram(const GLuint prog);
  *
  */
 bool ValidateProgram(const GLuint prog);
-}  // namespace shader
 
-}  // namespace ndkHelper
+MACE_END
+
 #endif /* SHADER_H_ */

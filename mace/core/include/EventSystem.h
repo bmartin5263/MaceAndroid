@@ -7,7 +7,9 @@
 
 #include <queue>
 #include "events/Event.h"
+#include "Core.h"
 
+MACE_START
 
 class EventSystem {
 public:
@@ -20,5 +22,6 @@ private:
     std::queue<Event> eventQueue;
 };
 
+MACE_END
 
 #endif //MACE_EVENTSYSTEM_H

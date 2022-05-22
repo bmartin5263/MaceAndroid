@@ -6,6 +6,9 @@
 #define MACE_APPINITEVENT_H
 
 #include "EventBase.h"
+#include "Core.h"
+
+MACE_START
 
 struct AppInitEvent {
     AppInitEvent() = default;
@@ -15,5 +18,7 @@ struct AppInitEvent {
 
     NativeWindow nativeWindow;
 };
+
+MACE_END
 
 #endif //MACE_APPINITEVENT_H

@@ -6,6 +6,9 @@
 #define MACE_APPRESUMEEVENT_H
 
 #include "EventBase.h"
+#include "Core.h"
+
+MACE_START
 
 struct AppResumeEvent {
     AppResumeEvent() = default;
@@ -14,5 +17,7 @@ struct AppResumeEvent {
     {}
     NativeWindow nativeWindow;
 };
+
+MACE_END
 
 #endif //MACE_APPRESUMEEVENT_H

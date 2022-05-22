@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-//--------------------------------------------------------------------------------
-// TeapotRenderer.cpp
-// Render a teapot
-//--------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------
-// Include files
-//--------------------------------------------------------------------------------
-#include "rendering/TeapotRenderer.h"
 
-//--------------------------------------------------------------------------------
-// Teapot model data
-//--------------------------------------------------------------------------------
+#include "rendering/TeapotRenderer.h"
 #include "rendering/teapot.inl"
 #include "graphics/gl3stub.h"
 #include <cassert>
 #include "graphics/Shader.h"
 #include "rendering/TapCamera.h"
+#include "Log.h"
 
-//--------------------------------------------------------------------------------
-// Dtor
-//--------------------------------------------------------------------------------
+MACE_START
+
 TeapotRenderer::~TeapotRenderer() {
     unload();
 }
@@ -202,21 +192,21 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
 
     // Create shader program
     program = glCreateProgram();
-    LOGI("Created Shader %d", program);
+    Log::Info("Created Shader %d", program);
 
     // Create and compile vertex shader
-    if (!ndk_helper::shader::CompileShader(&vert_shader, GL_VERTEX_SHADER,
+    if (!CompileShader(&vert_shader, GL_VERTEX_SHADER,
                                            strVsh)) {
-        LOGI("Failed to compile vertex shader");
+        Log::Info("Failed to compile vertex shader");
         glDeleteProgram(program);
         assert(false);
         return false;
     }
 
     // Create and compile fragment shader
-    if (!ndk_helper::shader::CompileShader(&frag_shader, GL_FRAGMENT_SHADER,
+    if (!CompileShader(&frag_shader, GL_FRAGMENT_SHADER,
                                            strFsh)) {
-        LOGI("Failed to compile fragment shader");
+        Log::Info("Failed to compile fragment shader");
         glDeleteProgram(program);
         assert(false);
         return false;
@@ -235,8 +225,8 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
     glBindAttribLocation(program, ATTRIB_UV, "myUV");
 
     // Link program
-    if (!ndk_helper::shader::LinkProgram(program)) {
-        LOGI("Failed to link program: %d", program);
+    if (!LinkProgram(program)) {
+        Log::Info("Failed to link program: %d", program);
 
         if (vert_shader) {
             glDeleteShader(vert_shader);
@@ -274,3 +264,5 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
 void TeapotRenderer::bind(TapCamera *camera) {
     this->camera = camera;
 }
+
+MACE_END

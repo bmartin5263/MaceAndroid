@@ -28,23 +28,17 @@ endif()
 IF(ANDROID)
     include(AndroidNdkModules)
     android_ndk_import_module_native_app_glue()
-    add_library( # Sets the name of the library.
-            mace
+    add_library(mace STATIC
 
-            # Sets the library as a shared library.
-            STATIC
+            ndk/src/GestureDetector.cpp
+            ndk/src/JNIHelper.cpp
+            ndk/src/SensorManager.cpp
+            ndk/src/AndroidEngine.cpp
+            ndk/src/AndroidLog.cpp
+            ndk/src/AssetUtil.cpp
+            ndk/src/OriginalEngine.cpp
 
-            ndk/cpp/Bridge.cpp
-            ndk/cpp/GestureDetector.cpp
-            ndk/cpp/JNIHelper.cpp
-            ndk/cpp/SensorManager.cpp
-            ndk/cpp/AndroidEngine.cpp
-            ndk/cpp/AndroidLog.cpp
-            ndk/cpp/AssetUtil.cpp
-            ndk/cpp/Engine.cpp
-
-            core/src/Core.cpp
-            core/src/MyEngine.cpp
+            core/src/CoreEngine.cpp
             core/src/Clock.cpp
             core/src/EventSystem.cpp
             core/src/gl3stub.cpp
@@ -52,7 +46,6 @@ IF(ANDROID)
             core/src/Interpolator.cpp
             core/src/EngineImpl.cpp
             core/src/Event.cpp
-            core/src/Graphics.cpp
             core/src/TeapotRenderer.cpp
             core/src/TexturedTeapotRenderer.cpp
             core/src/Shader.cpp
@@ -80,5 +73,5 @@ ENDIF()
 
 target_include_directories(mace PUBLIC core/include)
 target_include_directories(mace PRIVATE ${coreLib})
-target_include_directories(mace PUBLIC ndk/include)
+target_include_directories(mace PUBLIC ndk/src)
 target_include_directories(mace PUBLIC core/pinclude)

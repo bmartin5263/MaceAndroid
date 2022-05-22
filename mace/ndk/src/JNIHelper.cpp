@@ -16,7 +16,7 @@
 
 #include "JNIHelper.h"
 
-#include <string.h>
+#include <cstring>
 
 #include <fstream>
 #include <iostream>
@@ -24,7 +24,7 @@
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
-namespace ndk_helper {
+MACE_NDK_START
 
 #define NATIVEACTIVITY_CLASS_NAME "android/app/NativeActivity"
 
@@ -768,4 +768,4 @@ JNIEXPORT void Java_dev_bdon_helper_NDKHelper_RunOnUiThreadHandler(
 }
 }
 
-}  // namespace ndkHelper
+MACE_NDK_END

@@ -1,19 +1,3 @@
-/*
- * Copyright 2018 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #include "graphics/Texture.h"
 #include <GLES3/gl32.h>
 
@@ -23,24 +7,27 @@
 
 #define MODULE_NAME "Teapot::Texture"
 #include "android_debug.h"
+#include "JNIHelper.h"
+
+MACE_START
 
 /**
  * Cubemap and Texture2d implementations for Class Texture.
  */
-class TextureCubemap :public Texture {
+class TextureCubemap : public Texture {
 protected:
     GLuint texId_ = GL_INVALID_VALUE;
     bool activated_ = false;
 
 public:
-    virtual ~TextureCubemap();
+    ~TextureCubemap() override;
     TextureCubemap(std::vector<std::string>& texFiles,
                    AAssetManager* assetManager);
-    virtual bool GetActiveSamplerInfo(std::vector<std::string>& names,
-                                      std::vector<GLint>& units);
-    virtual bool Activate(void);
-    virtual GLuint GetTexType();
-    virtual GLuint GetTexId();
+    bool GetActiveSamplerInfo(std::vector<std::string>& names,
+                                      std::vector<GLint>& units) override;
+    bool Activate() override;
+    GLuint GetTexType() override;
+    GLuint GetTexId() override;
 };
 
 class Texture2d :public Texture {
@@ -48,27 +35,17 @@ protected:
     GLuint texId_ = GL_INVALID_VALUE;
     bool activated_ = false;
 public:
-    virtual ~Texture2d();
+    ~Texture2d() override;
     // Implement just one texture
     Texture2d(std::string &texFiles, AAssetManager* assetManager);
-    virtual bool GetActiveSamplerInfo(std::vector<std::string>& names,
-                                      std::vector<GLint>& units);
-    virtual bool Activate(void);
-    virtual GLuint GetTexType();
-    virtual GLuint GetTexId();
+    bool GetActiveSamplerInfo(std::vector<std::string>& names, std::vector<GLint>& units) override;
+    bool Activate() override;
+    GLuint GetTexType() override;
+    GLuint GetTexId() override;
 };
 
-/**
- * Capability debug string
- */
 static const std::string supportedTextureTypes = "GL_TEXTURE_2D(0x0DE1) GL_TEXTURE_CUBE_MAP(0x8513)";
 
-
-/**
- * Interface implementations
- */
-Texture::Texture() {}
-Texture::~Texture() {}
 /**
  * Create Texture Object
  * @param texFiles holds the texture file name(s) under APK's assets
@@ -161,7 +138,7 @@ TextureCubemap::TextureCubemap(std::vector<std::string> &files,
 
     for(GLuint i = 0; i < 6; i++) {
         fileBits.clear();
-        AssetReadFile(mgr, files[i], fileBits);
+        mace::ndk::AssetReadFile(mgr, files[i], fileBits);
 
         // tga/bmp files are saved as vertical mirror images ( at least more than half ).
         stbi_set_flip_vertically_on_load(1);
@@ -237,7 +214,7 @@ Texture2d::Texture2d(std::string& fileName, AAssetManager* assetManager)  {
         return;
     }
 
-    AssetReadFile(assetManager, texName, fileBits);
+    mace::ndk::AssetReadFile(assetManager, texName, fileBits);
 
     // tga/bmp files are saved as vertical mirror images ( at least more than half ).
     stbi_set_flip_vertically_on_load(1);
@@ -296,3 +273,5 @@ GLuint Texture2d::GetTexType() {
 GLuint Texture2d::GetTexId() {
     return texId_;
 }
+
+MACE_END

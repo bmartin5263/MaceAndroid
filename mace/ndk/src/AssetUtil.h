@@ -20,10 +20,15 @@
 #include <string>
 #include <vector>
 #include <android/asset_manager.h>
+#include "Core.h"
+
+MACE_NDK_START
 
 bool AssetEnumerateFileType(AAssetManager * assetManager,
                         const char* type, std::vector<std::string> & files);
 bool AssetReadFile(AAssetManager* assetManager,
               std::string& name, std::vector<uint8_t>& buf);
+
+MACE_NDK_END
 
 #endif // __ASSET__UTIL_H__

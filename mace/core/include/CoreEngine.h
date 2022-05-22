@@ -2,17 +2,21 @@
 // Created by Brandon on 5/13/22.
 //
 
-#ifndef MACE_MYENGINE_H
-#define MACE_MYENGINE_H
+#ifndef MACE_COREENGINE_H
+#define MACE_COREENGINE_H
 
 #ifdef __ANDROID__
 #include <android_native_app_glue.h>
 #endif
 
+#include "Core.h"
+
+MACE_START
+
 class EngineImpl;
 class EventSystem;
-class DeviceEngine;
-class MyEngine {
+class PlatformEngine;
+class CoreEngine {
 public:
 #ifdef __ANDROID__
     static void Init(android_app* app);
@@ -36,12 +40,14 @@ public:
 
 private:
     static EngineImpl& Instance();
-    static DeviceEngine* deviceEngine;
+    static PlatformEngine* deviceEngine;
 
-    MyEngine() = delete;
-    MyEngine(MyEngine& other) = delete;
-    MyEngine& operator=(MyEngine& other) = delete;
-    ~MyEngine() = delete;
+    CoreEngine() = delete;
+    CoreEngine(CoreEngine& other) = delete;
+    CoreEngine& operator=(CoreEngine& other) = delete;
+    ~CoreEngine() = delete;
 };
 
-#endif //MACE_MYENGINE_H
+MACE_END
+
+#endif //MACE_COREENGINE_H

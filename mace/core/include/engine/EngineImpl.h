@@ -9,16 +9,20 @@
 struct android_app;
 #endif
 
-#include "../graphics/GLContext.h"
-#include "../Clock.h"
-#include "../rendering/TexturedTeapotRenderer.h"
-#include "../rendering/TapCamera.h"
-#include "../EventSystem.h"
+#include "graphics/GLContext.h"
+#include "Clock.h"
+#include "rendering/TexturedTeapotRenderer.h"
+#include "rendering/TapCamera.h"
+#include "EventSystem.h"
 
-class DeviceEngine;
+#include "Core.h"
+
+MACE_START
+
+class PlatformEngine;
 class EngineImpl {
 public:
-    explicit EngineImpl(std::unique_ptr<DeviceEngine> deviceEngine);
+    explicit EngineImpl(std::unique_ptr<PlatformEngine> deviceEngine);
     void launch();
 
     EventSystem& getEventSystem();
@@ -28,7 +32,7 @@ private:
     void draw();
     bool isRunning();
 
-    std::unique_ptr<DeviceEngine> deviceEngine;
+    std::unique_ptr<PlatformEngine> deviceEngine;
     EventSystem eventSystem;
 
     TapCamera tapCamera;
@@ -39,5 +43,6 @@ private:
 
 };
 
+MACE_END
 
 #endif //MACE_ENGINEIMPL_H

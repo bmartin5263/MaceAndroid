@@ -23,8 +23,9 @@
 #include <android/log.h>
 #include "JNIHelper.h"
 #include "math/vecmath.h"
+#include "Core.h"
 
-namespace ndk_helper {
+MACE_NDK_START
 
 const int32_t DOUBLE_TAP_TIMEOUT = 300 * 1000000;
 const int32_t TAP_TIMEOUT = 180 * 1000000;
@@ -120,5 +121,5 @@ private:
     std::vector<int32_t> pointers{};
 };
 
-}  // namespace ndkHelper
+MACE_NDK_END
 #endif /* GESTUREDETECTOR_H_ */

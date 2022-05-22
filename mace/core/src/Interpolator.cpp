@@ -15,21 +15,21 @@
  */
 
 #include "graphics/Interpolator.h"
-#include <math.h>
+#include <cmath>
 
-namespace ndk_helper {
+MACE_START
 
-//-------------------------------------------------
-// Ctor
-//-------------------------------------------------
-Interpolator::Interpolator() { list_params_.clear(); }
+Interpolator::Interpolator() {
+  list_params_.clear();
+}
 
-//-------------------------------------------------
-// Dtor
-//-------------------------------------------------
-Interpolator::~Interpolator() { list_params_.clear(); }
+Interpolator::~Interpolator() {
+  list_params_.clear();
+}
 
-void Interpolator::Clear() { list_params_.clear(); }
+void Interpolator::Clear() {
+  list_params_.clear();
+}
 
 Interpolator& Interpolator::Set(const float start, const float dest,
                                 const INTERPOLATOR_TYPE type,
@@ -149,4 +149,4 @@ float Interpolator::GetFormula(const INTERPOLATOR_TYPE type, const float t,
   }
 }
 
-}  // namespace ndkHelper
+MACE_END

@@ -2,8 +2,8 @@
 // Created by Brandon on 5/12/22.
 //
 
-#ifndef MACE_ENGINE_H
-#define MACE_ENGINE_H
+#ifndef MACE_ORIGINALENGINE_H
+#define MACE_ORIGINALENGINE_H
 
 #include <jni.h>
 #include <cerrno>
@@ -13,16 +13,17 @@
 #include <android_native_app_glue.h>
 #include <android/native_window_jni.h>
 #include "graphics/GLContext.h"
-#include <Clock.h>
+#include "Clock.h"
+#include "Core.h"
 
 #include "rendering/TexturedTeapotRenderer.h"
 #include "NDKHelper.h"
 
 #include "rendering/TapCamera.h"
 
-class Engine {
+class OriginalEngine {
 public:
-    explicit Engine(android_app *app);
+    explicit OriginalEngine(android_app *app);
 
     void run();
     bool update();
@@ -46,28 +47,28 @@ private:
     void showUI();
     void updateFPS();
 
-    void transformPosition(Vec2 &vec);
+    void transformPosition(mace::Vec2 &vec);
 
     // Input handling
     void handleDrag(AInputEvent *event);
     void handlePinch(AInputEvent *event);
-    inline void transformPosition(Vec2 &v1, Vec2 &v2);
+    inline void transformPosition(mace::Vec2 &v1, mace::Vec2 &v2);
 
     bool initialized;
     bool focused;
 
     android_app* app;
 
-    TapCamera tapCamera;
-    GLContext glContext;
-    Clock engineClock;
+    mace::TapCamera tapCamera;
+    mace::GLContext glContext;
+    mace::Clock engineClock;
 
-    TexturedTeapotRenderer teapotRender;
+    mace::TexturedTeapotRenderer teapotRender;
 
-    ndk_helper::DoubletapDetector doubletapDetector;
-    ndk_helper::DragDetector dragDetector;
-    ndk_helper::PinchDetector pinchDetector;
-    ndk_helper::SensorManager sensorManager;
+    mace::ndk::DoubletapDetector doubletapDetector;
+    mace::ndk::DragDetector dragDetector;
+    mace::ndk::PinchDetector pinchDetector;
+    mace::ndk::SensorManager sensorManager;
 };
 
-#endif //MACE_ENGINE_H
+#endif //MACE_ORIGINALENGINE_H

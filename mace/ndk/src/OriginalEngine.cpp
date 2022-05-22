@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-#include "Engine.h"
-#include "MyEngine.h"
+#include "OriginalEngine.h"
+#include "CoreEngine.h"
 #include "Log.h"
 
-Engine::Engine(android_app* app):
+using namespace mace;
+
+OriginalEngine::OriginalEngine(android_app* app):
     initialized(false),
     focused(false),
     app(app)
@@ -30,18 +32,18 @@ Engine::Engine(android_app* app):
     LOGI("Engine Initialized");
 }
 
-void Engine::loadResources() {
+void OriginalEngine::loadResources() {
     teapotRender.init(app->activity->assetManager);
 }
 
-void Engine::unloadResources() {
+void OriginalEngine::unloadResources() {
     teapotRender.unload();
 }
 
 /**
  * Initialize an EGL context for the current display.
  */
-int Engine::initWindow(android_app* app) {
+int OriginalEngine::initWindow(android_app* app) {
     if (!initialized) {
         LOGW("Engine::initWindow initializing resources");
         glContext.init(app->window);
@@ -88,7 +90,7 @@ int Engine::initWindow(android_app* app) {
     return 0;
 }
 
-void Engine::updateFPS() {
+void OriginalEngine::updateFPS() {
     float fps;
     if (engineClock.update(fps)) {
         JNIEnv *jni;
@@ -103,7 +105,7 @@ void Engine::updateFPS() {
     }
 }
 
-void Engine::drawFrame() {
+void OriginalEngine::drawFrame() {
     updateFPS();
     teapotRender.update(static_cast<float>(Clock::GetCurrentTime()));
 
@@ -123,16 +125,16 @@ void Engine::drawFrame() {
 /**
  * Tear down the EGL context currently associated with the display.
  */
-void Engine::termWindow() {
+void OriginalEngine::termWindow() {
     glContext.suspend();
 }
 
-void Engine::trimMemory() {
+void OriginalEngine::trimMemory() {
     Log::Error("Trimming memory");
 }
 
-void Engine::handleDrag(AInputEvent* event) {
-    using namespace ndk_helper;
+void OriginalEngine::handleDrag(AInputEvent* event) {
+    using namespace mace::ndk;
     GestureState dragState = dragDetector.detect(event);
     if (dragState & GESTURE_STATE_START) {
         // Otherwise, start dragging
@@ -150,16 +152,16 @@ void Engine::handleDrag(AInputEvent* event) {
     }
 }
 
-void Engine::handlePinch(AInputEvent* event) {
-    using namespace ndk_helper;
+void OriginalEngine::handlePinch(AInputEvent* event) {
+    using namespace mace::ndk;
     GestureState pinchState = pinchDetector.detect(event);
-    if (pinchState & ndk_helper::GESTURE_STATE_START) {
+    if (pinchState & mace::ndk::GESTURE_STATE_START) {
         // Start new pinch
         Vec2 v1, v2;
         pinchDetector.getPointers(v1, v2);
         transformPosition(v1,v2);
         tapCamera.beginPinch(v1, v2);
-    } else if (pinchState & ndk_helper::GESTURE_STATE_MOVE) {
+    } else if (pinchState & mace::ndk::GESTURE_STATE_MOVE) {
         // Multi touch
         // Start new pinch
         Vec2 v1, v2;
@@ -172,24 +174,24 @@ void Engine::handlePinch(AInputEvent* event) {
 /**
  * Process the next input event.
  */
-int32_t Engine::OnInputEvent(android_app* app, AInputEvent* event) {
-    auto* engine = static_cast<Engine*>(app->userData);
+int32_t OriginalEngine::OnInputEvent(android_app* app, AInputEvent* event) {
+    auto* engine = static_cast<OriginalEngine*>(app->userData);
     return engine->handleInputEvent(app, event);
 }
 
 /**
  * Process the next main command.
  */
-void Engine::OnAppCmd(android_app* app, int32_t cmd) {
-    auto* engine = static_cast<Engine*>(app->userData);
+void OriginalEngine::OnAppCmd(android_app* app, int32_t cmd) {
+    auto* engine = static_cast<OriginalEngine*>(app->userData);
     engine->handleCmd(app, cmd);
 }
 
-bool Engine::hasFocus() const {
+bool OriginalEngine::hasFocus() const {
     return focused;
 }
 
-void Engine::transformPosition(Vec2 &vec) {
+void OriginalEngine::transformPosition(Vec2 &vec) {
     auto w = static_cast<float>(glContext.getScreenWidth());
     auto h = static_cast<float>(glContext.getScreenHeight());
     vec = Vec2(2.0f, 2.0f) * vec /
@@ -197,12 +199,12 @@ void Engine::transformPosition(Vec2 &vec) {
           Vec2(1.f, 1.f);
 }
 
-void Engine::transformPosition(Vec2 &v1, Vec2 &v2) {
+void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
     transformPosition(v1);
     transformPosition(v2);
 }
 
-void Engine::showUI() {
+void OriginalEngine::showUI() {
     LOGI("Engine::showUI()");
     JNIEnv *jni;
     app->activity->vm->AttachCurrentThread(&jni, nullptr);
@@ -217,12 +219,12 @@ void Engine::showUI() {
 
 const char* HELPER_CLASS_NAME = "dev/bdon/helper/NDKHelper";
 
-void Engine::run() {
-    ndk_helper::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
+void OriginalEngine::run() {
+    mace::ndk::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
 
     app->userData = this;
-    app->onAppCmd = Engine::OnAppCmd;
-    app->onInputEvent = Engine::OnInputEvent;
+    app->onAppCmd = OriginalEngine::OnAppCmd;
+    app->onInputEvent = OriginalEngine::OnInputEvent;
     sensorManager.init(app);
 
 #ifdef USE_NDK_PROFILER
@@ -236,7 +238,7 @@ void Engine::run() {
     Log::Error("Shutdown");
 }
 
-bool Engine::update() {
+bool OriginalEngine::update() {
     int id;
     int events;
     android_poll_source *source;
@@ -278,7 +280,7 @@ bool Engine::update() {
     return true;
 }
 
-void Engine::draw() {
+void OriginalEngine::draw() {
     if (hasFocus()) {
         // Drawing is throttled to the screen update rate, so there
         // is no need to do timing here.
@@ -286,7 +288,7 @@ void Engine::draw() {
     }
 }
 
-void Engine::handleCmd(android_app *app, int32_t cmd) {
+void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
     switch (cmd) {
         case APP_CMD_START:
             LOGI("Processing APP_CMD_START");
@@ -362,9 +364,9 @@ void Engine::handleCmd(android_app *app, int32_t cmd) {
     }
 }
 
-int32_t Engine::handleInputEvent(android_app *app, AInputEvent *event) {
-    using namespace ndk_helper;
-    auto* engine = static_cast<Engine*>(app->userData);
+int32_t OriginalEngine::handleInputEvent(android_app *app, AInputEvent *event) {
+    using namespace mace::ndk;
+    auto* engine = static_cast<OriginalEngine*>(app->userData);
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
         // Double tap detector has a priority over other detectors
         GestureState doubleTapState = engine->doubletapDetector.detect(event);

@@ -5,7 +5,7 @@
 #ifndef MACE_ANDROIDENGINE_H
 #define MACE_ANDROIDENGINE_H
 
-#include "Engine.h"
+#include "OriginalEngine.h"
 
 void onAppCmd(android_app* app, int32_t cmd);
 

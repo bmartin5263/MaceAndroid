@@ -6,6 +6,9 @@
 #define MACE_LOG_H
 
 #include <string>
+#include "Core.h"
+
+MACE_START
 
 class Log {
 public:
@@ -21,5 +24,7 @@ public:
     static void Error(const char* fmt...);
     static void Error(const char* fmt, const char* args...);
 };
+
+MACE_END
 
 #endif //MACE_LOG_H

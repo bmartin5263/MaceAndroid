@@ -20,11 +20,10 @@
 #include <jni.h>
 #include <errno.h>
 #include <time.h>
-#include "JNIHelper.h"
 #include "Clock.h"
 #include <list>
 
-namespace ndk_helper {
+MACE_START
 
 enum INTERPOLATOR_TYPE {
   INTERPOLATOR_TYPE_LINEAR,
@@ -76,5 +75,6 @@ class Interpolator {
   void Clear();
 };
 
-}  // namespace ndkHelper
+MACE_END
+
 #endif /* INTERPOLATOR_H_ */

@@ -18,6 +18,8 @@ package dev.bdon.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -37,8 +39,12 @@ import android.opengl.GLUtils;
 import android.os.Build;
 import android.util.Log;
 
+@SuppressWarnings("unused")
 @TargetApi(Build.VERSION_CODES.S_V2)    // Linting
 public class NDKHelper {
+
+    private static boolean loadedSO = false;
+    NativeActivity activity;
 
     public NDKHelper(NativeActivity act) {
         activity = act;
@@ -62,11 +68,6 @@ public class NDKHelper {
         } else
             return true;
     }
-
-    private static boolean loadedSO = false;
-    NativeActivity activity;
-
-
 
     //
     // Load Bitmap
@@ -99,7 +100,7 @@ public class NDKHelper {
                 true);
     }
 
-    public class TextureInformation {
+    public static class TextureInformation {
         boolean ret;
         boolean alphaChannel;
         int originalWidth;
@@ -111,35 +112,14 @@ public class NDKHelper {
         Bitmap bitmap = null;
         TextureInformation info = new TextureInformation();
         try {
-            String str = path;
-            if (!path.startsWith("/")) {
-                str = "/" + path;
-            }
-
-            File file = new File(activity.getExternalFilesDir(null), str);
-            if (file.canRead()) {
-                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            } else {
-                bitmap = BitmapFactory.decodeStream(activity.getResources()
-                        .getAssets().open(path));
-            }
-            // Matrix matrix = new Matrix();
-            // // resize the bit map
-            // matrix.postScale(-1F, 1F);
-            //
-            // // recreate the new Bitmap and set it back
-            // bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-            // bitmap.getHeight(), matrix, true);
-
-        } catch (Exception e) {
+            bitmap = loadBitmap(path);
+        } catch (IOException e) {
             Log.w("NDKHelper", "Coundn't load a file:" + path);
             info.ret = false;
             return info;
         }
 
-        if (bitmap != null) {
-            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-        }
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
         info.ret = true;
         info.alphaChannel = bitmap.hasAlpha();
         info.originalWidth = getBitmapWidth(bitmap);
@@ -149,45 +129,17 @@ public class NDKHelper {
     }
 
     public Object loadCubemapTexture(String path, int face, int miplevel, boolean sRGB) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         TextureInformation info = new TextureInformation();
         try {
-            String str = path;
-            if (!path.startsWith("/")) {
-                str = "/" + path;
-            }
-
-            File file = new File(activity.getExternalFilesDir(null), str);
-            if (file.canRead()) {
-                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            } else {
-                bitmap = BitmapFactory.decodeStream(activity.getResources()
-                        .getAssets().open(path));
-            }
+            bitmap = loadBitmap(path);
         } catch (Exception e) {
             Log.w("NDKHelper", "Coundn't load a file:" + path);
             info.ret = false;
             return info;
         }
 
-        if (bitmap != null) {
-            if (sRGB)
-            {
-//        		GLUtils.texImage2D(face, miplevel, bitmap, 0);
-//        		GLUtils.texImage2D(face, miplevel,
-//        				GLUtils.getInternalFormat(bitmap), bitmap, 0);
-//        		int i = GLUtils.getInternalFormat(bitmap);
-//        		if( i == GL10.GL_RGBA)
-//        		{
-//            		GLUtils.texImage2D(face, miplevel,
-//            				GLES30.GL_SRGB, bitmap, 0);
-//        		}
-                //Leave them for now
-                GLUtils.texImage2D(face, miplevel, bitmap, 0);
-            }
-            else
-                GLUtils.texImage2D(face, miplevel, bitmap, 0);
-        }
+        GLUtils.texImage2D(face, miplevel, bitmap, 0);
         info.ret = true;
         info.alphaChannel = bitmap.hasAlpha();
         info.originalWidth = getBitmapWidth(bitmap);
@@ -198,30 +150,17 @@ public class NDKHelper {
     }
 
     public Object loadImage(String path) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         TextureInformation info = new TextureInformation();
         try {
-            String str = path;
-            if (!path.startsWith("/")) {
-                str = "/" + path;
-            }
-
-            File file = new File(activity.getExternalFilesDir(null), str);
-            if (file.canRead()) {
-                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            } else {
-                bitmap = BitmapFactory.decodeStream(activity.getResources()
-                        .getAssets().open(path));
-            }
+            bitmap = loadBitmap(path);
         } catch (Exception e) {
             Log.w("NDKHelper", "Coundn't load a file:" + path);
             info.ret = false;
             return info;
         }
 
-        if (bitmap != null) {
-            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-        }
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
         info.ret = true;
         info.alphaChannel = bitmap.hasAlpha();
         info.originalWidth = getBitmapWidth(bitmap);
@@ -233,6 +172,21 @@ public class NDKHelper {
         bitmap.copyPixelsToBuffer(buffer);
         info.image = buffer;
         return info;
+    }
+
+    public Bitmap loadBitmap(String path) throws IOException {
+        String str = path;
+        if (!path.startsWith("/")) {
+            str = "/" + path;
+        }
+
+        var file = new File(activity.getExternalFilesDir(null), str);
+        if (file.canRead()) {
+            return BitmapFactory.decodeStream(new FileInputStream(file));
+        } else {
+            return BitmapFactory.decodeStream(activity.getResources()
+                    .getAssets().open(path));
+        }
     }
 
     public Bitmap openBitmap(String path, boolean iScalePOT) {

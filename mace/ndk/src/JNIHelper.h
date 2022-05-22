@@ -27,22 +27,9 @@
 #include <android/log.h>
 #include <android_native_app_glue.h>
 
-#define LOGI(...)                                                           \
-  ((void)__android_log_print(                                               \
-      ANDROID_LOG_INFO, ndk_helper::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
-#define LOGW(...)                                                           \
-  ((void)__android_log_print(                                               \
-      ANDROID_LOG_WARN, ndk_helper::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
-#define LOGE(...)                                                            \
-  ((void)__android_log_print(                                                \
-      ANDROID_LOG_ERROR, ndk_helper::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
+#include "Core.h"
 
-namespace ndk_helper {
-
-    class JUIView;
+MACE_NDK_START
 
 /******************************************************************
  * Helper functions for JNI calls
@@ -332,4 +319,4 @@ public:
                            const char* strSignature, ...);
 };
 
-}  // namespace ndkHelper
+MACE_NDK_END

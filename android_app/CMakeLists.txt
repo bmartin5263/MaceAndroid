@@ -35,8 +35,8 @@ get_filename_component(gameDir ../game ABSOLUTE)
 #                    WORKING_DIRECTORY ${commonDir})
 #endif()
 
-## ndkHelperSrc = common/ndk_helper
-#get_filename_component(ndkHelperSrc ${commonDir}/ndk_helper ABSOLUTE)
+## ndkHelperSrc = common/mace::ndk
+#get_filename_component(ndkHelperSrc ${commonDir}/mace::ndk ABSOLUTE)
 #
 ## build the ndk-helper library, additional directory must be specified
 #add_subdirectory(${ndkHelperSrc}

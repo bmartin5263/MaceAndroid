@@ -3,11 +3,13 @@
 //
 
 #include "engine/EngineImpl.h"
-#include "DeviceEngine.h"
+#include "PlatformEngine.h"
 #include "EventSystem.h"
 #include "Log.h"
 
-EngineImpl::EngineImpl(std::unique_ptr<DeviceEngine> deviceEngine):
+MACE_START
+
+EngineImpl::EngineImpl(std::unique_ptr<PlatformEngine> deviceEngine):
     deviceEngine{std::move(deviceEngine)}, eventSystem{}, tapCamera{}, glContext{},
     engineClock{}, teapotRender{}
 {
@@ -34,3 +36,5 @@ bool EngineImpl::isRunning() {
 EventSystem &EngineImpl::getEventSystem() {
     return eventSystem;
 }
+
+MACE_END

@@ -3,10 +3,12 @@
 //
 
 #include "EventSystem.h"
-#include "MyEngine.h"
+#include "CoreEngine.h"
+
+MACE_START
 
 EventSystem &EventSystem::Instance() {
-    return MyEngine::EventSystem();
+    return CoreEngine::EventSystem();
 }
 
 void EventSystem::pushEvent(const Event &event) {
@@ -16,3 +18,5 @@ void EventSystem::pushEvent(const Event &event) {
 void EventSystem::PushEvent(const Event &event) {
     Instance().pushEvent(event);
 }
+
+MACE_END

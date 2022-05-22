@@ -1,33 +1,18 @@
-/*
- * Copyright 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 #include <cstdlib>
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
 #include "graphics/Shader.h"
 
-namespace ndk_helper {
+MACE_START
 
 #define DEBUG (1)
 
-bool shader::CompileShader(
+bool CompileShader(
     GLuint *shader, const GLenum type, const char *str_file_name,
     const std::map<std::string, std::string> &map_parameters) {
   std::vector<uint8_t> data;
-  if (!JNIHelper::GetInstance()->ReadFile(str_file_name, &data)) {
+  if (!mace::ndk::JNIHelper::GetInstance()->ReadFile(str_file_name, &data)) {
     LOGI("Can not open a file:%s", str_file_name);
     return false;
   }
@@ -64,10 +49,10 @@ bool shader::CompileShader(
 
   std::vector<uint8_t> v(str.begin(), str.end());
   str.clear();
-  return shader::CompileShader(shader, type, v);
+  return CompileShader(shader, type, v);
 }
 
-bool shader::CompileShader(GLuint *shader, const GLenum type,
+bool CompileShader(GLuint *shader, const GLenum type,
                            const GLchar *source, const int32_t iSize) {
   if (source == NULL || iSize <= 0) return false;
 
@@ -98,28 +83,28 @@ bool shader::CompileShader(GLuint *shader, const GLenum type,
   return true;
 }
 
-bool shader::CompileShader(GLuint *shader, const GLenum type,
+bool CompileShader(GLuint *shader, const GLenum type,
                            std::vector<uint8_t> &data) {
   if (!data.size()) return false;
 
   const GLchar *source = (GLchar *)&data[0];
   int32_t iSize = data.size();
-  return shader::CompileShader(shader, type, source, iSize);
+  return CompileShader(shader, type, source, iSize);
 }
 
-bool shader::CompileShader(GLuint *shader, const GLenum type,
+bool CompileShader(GLuint *shader, const GLenum type,
                            const char *strFileName) {
   std::vector<uint8_t> data;
-  bool b = JNIHelper::GetInstance()->ReadFile(strFileName, &data);
+  bool b = mace::ndk::JNIHelper::GetInstance()->ReadFile(strFileName, &data);
   if (!b) {
     LOGI("Can not open a file:%s", strFileName);
     return false;
   }
 
-  return shader::CompileShader(shader, type, data);
+  return CompileShader(shader, type, data);
 }
 
-bool shader::LinkProgram(const GLuint prog) {
+bool LinkProgram(const GLuint prog) {
   GLint status;
 
   glLinkProgram(prog);
@@ -144,7 +129,7 @@ bool shader::LinkProgram(const GLuint prog) {
   return true;
 }
 
-bool shader::ValidateProgram(const GLuint prog) {
+bool ValidateProgram(const GLuint prog) {
   GLint logLength, status;
 
   glValidateProgram(prog);
@@ -162,4 +147,4 @@ bool shader::ValidateProgram(const GLuint prog) {
   return true;
 }
 
-}  // namespace ndkHelper
+MACE_END

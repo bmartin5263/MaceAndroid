@@ -18,10 +18,10 @@
 #include <dlfcn.h>
 #include "SensorManager.h"
 
-namespace ndk_helper {
+MACE_NDK_START
 
 void SensorManager::init(android_app* app) {
-    ASensorManager* sensorManager = ndk_helper::AcquireASensorManagerInstance(app);
+    ASensorManager* sensorManager = mace::ndk::AcquireASensorManagerInstance(app);
     accelerometerSensor = ASensorManager_getDefaultSensor(sensorManager, ASENSOR_TYPE_ACCELEROMETER);
     sensorEventQueue = ASensorManager_createEventQueue(sensorManager, app->looper, LOOPER_ID_USER, nullptr, nullptr);
 }
@@ -85,4 +85,4 @@ ASensorManager* AcquireASensorManagerInstance(android_app* app) {
     return getInstanceFunc();
 }
 
-}  // namespace ndkHelper
+MACE_NDK_END

@@ -5,6 +5,8 @@
 #ifndef MACE_EVENTTYPE_H
 #define MACE_EVENTTYPE_H
 
+MACE_START
+
 enum class EventType {
 
     NONE = 0,
@@ -30,5 +32,7 @@ enum class EventType {
      */
     APP_RESUME = 1 << 4
 };
+
+MACE_END
 
 #endif //MACE_EVENTTYPE_H

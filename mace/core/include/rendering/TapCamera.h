@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-#pragma once
+#ifndef _TAP_CAMERA_H
+#define _TAP_CAMERA_H
+
+#include <Core.h>
 #include "c++/v1/vector"
 #include "c++/v1/string"
-#include "../math/vecmath.h"
+#include "math/vecmath.h"
+
+MACE_START
 
 /******************************************************************
  * Camera control helper class with a tap gesture
@@ -99,3 +104,7 @@ private:
     void ballUpdate();
     void initParameters();
 };
+
+MACE_END
+
+#endif

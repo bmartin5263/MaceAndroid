@@ -4,8 +4,8 @@
 
 #include <android_native_app_glue.h>
 #include <android/log.h>
-#include "Engine.h"
-#include "MyEngine.h"
+#include "OriginalEngine.h"
+#include "CoreEngine.h"
 #include "Game.h"
 
 /**
@@ -18,9 +18,9 @@ void android_main(android_app* app) {
     g.start();
 
     LOGI("android_main()");
-    MyEngine::Init(app);
-    MyEngine::Launch();
+    mace::CoreEngine::Init(app);
+    mace::CoreEngine::Launch();
 
-    Engine engine{app};
+    OriginalEngine engine{app};
     engine.run();
 }

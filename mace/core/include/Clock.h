@@ -19,6 +19,9 @@
 
 #include <errno.h>
 #include <time.h>
+#include "Core.h"
+
+MACE_START
 
 const int32_t SAMPLE_COUNT = 100;
 
@@ -50,5 +53,7 @@ private:
     time_t lastTimeValue;
     int32_t tickIndex;
 };
+
+MACE_END
 
 #endif /* PERFMONITOR_H_ */

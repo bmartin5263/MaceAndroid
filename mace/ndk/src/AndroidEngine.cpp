@@ -4,24 +4,27 @@
 
 #ifdef __ANDROID__
 #include "JNIHelper.h"
-#include "MyEngine.h"
+#include "CoreEngine.h"
 #include "engine/EngineImpl.h"
-#include "DeviceEngine.h"
+#include "PlatformEngine.h"
 #include "EventSystem.h"
 #include "Log.h"
+#include "Core.h"
 
-DeviceEngine::DeviceEngine(android_app *androidApp):
+using namespace mace;
+
+PlatformEngine::PlatformEngine(android_app *androidApp):
     app(androidApp)
 {
     Log::Error("AndroidEngine()");
 }
 
-void DeviceEngine::launch(EngineImpl *engine) {
+void PlatformEngine::launch(EngineImpl *engine) {
     Log::Error("AndroidEngine::launch()");
     doubletapDetector.setConfiguration(this->app->config);
     dragDetector.setConfiguration(this->app->config);
     pinchDetector.setConfiguration(this->app->config);
-//    ndk_helper::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
+//    mace::ndk::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
 //
 //    app->userData = this;
 //    app->onAppCmd = Engine::OnAppCmd;
@@ -67,8 +70,8 @@ void onAppCmd(android_app* app, int32_t cmd) {
     }
 }
 
-void MyEngine::Init(android_app *app) {
-    deviceEngine = new DeviceEngine(app);
+void CoreEngine::Init(android_app *app) {
+    deviceEngine = new PlatformEngine(app);
 }
 
 #endif

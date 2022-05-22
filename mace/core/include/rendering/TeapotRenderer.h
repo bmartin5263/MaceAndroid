@@ -34,6 +34,8 @@
 
 #define BUFFER_OFFSET(i) ((char*)NULL + (i))
 
+MACE_START
+
 struct TeapotVertex {
     float pos[3];
     float normal[3];
@@ -47,13 +49,13 @@ enum ShaderAttributes {
 
 struct ShaderParams {
     GLuint program;
-    GLuint light0;
-    GLuint materialDiffuse;
-    GLuint materialAmbient;
-    GLuint materialSpecular;
+    GLint light0;
+    GLint materialDiffuse;
+    GLint materialAmbient;
+    GLint materialSpecular;
 
-    GLuint matrixProjection;
-    GLuint matrixView;
+    GLint matrixProjection;
+    GLint matrixView;
 };
 
 struct TeapotMaterials {
@@ -97,5 +99,7 @@ protected:
 
     TapCamera* camera;
 };
+
+MACE_END
 
 #endif
