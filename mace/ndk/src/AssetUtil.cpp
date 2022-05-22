@@ -63,7 +63,7 @@ bool AssetEnumerateFileType(
             files.push_back(assetName);
         }
     }
-    LOGI("Found %d PNG Files", static_cast<uint32_t>(files.size()));
+    Log::Info("Found %d PNG Files", static_cast<uint32_t>(files.size()));
 
     AAssetDir_close(dir);
     return true;

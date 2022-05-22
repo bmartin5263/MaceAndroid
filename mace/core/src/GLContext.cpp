@@ -103,7 +103,7 @@ void GLContext::initEGLSurface() {
     }
 
     if (!num_configs) {
-        LOGE("Unable to retrieve EGL config");
+        Log::Error("Unable to retrieve EGL config");
         assert(false);
     }
 
@@ -120,7 +120,7 @@ void GLContext::initEGLContext() {
     };
     context = eglCreateContext(display, config, nullptr, context_attribs);
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
-        LOGE("Unable to eglMakeCurrent");
+        Log::Error("Unable to eglMakeCurrent");
         assert(false);
     }
 }
@@ -135,7 +135,7 @@ EGLint GLContext::swap() {
             return EGL_SUCCESS;  // Still consider glContext is valid
         } else if (err == EGL_CONTEXT_LOST || err == EGL_BAD_CONTEXT) {
             // Context has been lost!!
-            LOGE("GLContext::swap() - context lost");
+            Log::Error("GLContext::swap() - context lost");
             terminate();
             initEGLContext();
         }
@@ -182,18 +182,18 @@ EGLint GLContext::resume(ANativeWindow* window) {
 
     if (width != original_widhth || height != original_height) {
         // Screen resized
-        LOGW("GLContext::resume() - Screen resized");
+        Log::Warn("GLContext::resume() - Screen resized");
     }
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_TRUE)
         return EGL_SUCCESS;
 
     EGLint err = eglGetError();
-    LOGW("Unable to eglMakeCurrent %d", err);
+    Log::Warn("Unable to eglMakeCurrent %d", err);
 
     if (err == EGL_CONTEXT_LOST) {
         // Recreate context
-        LOGI("Re-creating egl context");
+        Log::Info("Re-creating egl context");
         initEGLContext();
     } else {
         // Recreate surface

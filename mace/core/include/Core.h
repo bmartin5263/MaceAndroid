@@ -11,17 +11,8 @@
 #define MACE_NDK_START namespace mace { namespace ndk {
 #define MACE_NDK_END }}
 
-#define LOGI(...)                                                           \
-  ((void)__android_log_print(                                               \
-      ANDROID_LOG_INFO, mace::ndk::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
-#define LOGW(...)                                                           \
-  ((void)__android_log_print(                                               \
-      ANDROID_LOG_WARN, mace::ndk::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
-#define LOGE(...)                                                            \
-  ((void)__android_log_print(                                                \
-      ANDROID_LOG_ERROR, mace::ndk::JNIHelper::GetInstance()->GetAppName(), \
-      __VA_ARGS__))
+#ifdef __ANDROID__
+#define ASSERT(cond, ...) if (!(cond)) {__android_log_assert(#cond, "CoreAssert", __VA_ARGS__);}
+#endif
 
 #endif //MACE_CORE_H

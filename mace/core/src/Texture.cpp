@@ -5,7 +5,6 @@
 #include <stb/stb_image.h>
 #include "AssetUtil.h"
 
-#define MODULE_NAME "Teapot::Texture"
 #include "android_debug.h"
 #include "JNIHelper.h"
 
@@ -61,8 +60,8 @@ Texture* Texture::Create( GLuint type, std::vector<std::string>& texFiles,
         return dynamic_cast<Texture*>(new TextureCubemap(texFiles, assetManager));
     }
 
-    LOGE("Unknow texture type %x to created", type);
-    LOGE("Supported Texture Types: %s", supportedTextureTypes.c_str());
+    Log::Error("Unknow texture type %x to created", type);
+    Log::Error("Supported Texture Types: %s", supportedTextureTypes.c_str());
     assert(false);
     return nullptr;
 }
@@ -75,21 +74,21 @@ void Texture::Delete(Texture* obj) {
 
     GLuint type = obj->GetTexType();
     if(type == GL_TEXTURE_2D) {
-        Texture2d *d2Instance = dynamic_cast<Texture2d*>(obj);
+        auto *d2Instance = dynamic_cast<Texture2d*>(obj);
         if (d2Instance) {
             delete d2Instance;
         } else {
             ASSERT(false, "Unknown obj type to %s", __FUNCTION__);
         }
     } else if(type == GL_TEXTURE_CUBE_MAP) {
-        TextureCubemap *cubemapInstance = dynamic_cast<TextureCubemap*>(obj);
+        auto *cubemapInstance = dynamic_cast<TextureCubemap*>(obj);
         if (cubemapInstance) {
             delete cubemapInstance;
         } else {
             ASSERT(false, "Unknown obj type to %s", __FUNCTION__);
         }
     } else {
-        LOGE("Supported Texture Types: %s", supportedTextureTypes.c_str());
+        Log::Error("Supported Texture Types: %s", supportedTextureTypes.c_str());
         ASSERT(false, "Unknow texture type %x to delete", type);
     }
 }
@@ -197,7 +196,7 @@ TextureCubemap::~TextureCubemap() {
  */
 Texture2d::Texture2d(std::string& fileName, AAssetManager* assetManager)  {
     if (!assetManager) {
-        LOGE("AssetManager to Texture2D() could not be null!!!");
+        Log::Error("AssetManager to Texture2D() could not be null!!!");
         assert(false);
         return;
     }

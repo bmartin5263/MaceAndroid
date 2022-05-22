@@ -41,7 +41,7 @@ void onAppCmd(android_app* app, int32_t cmd) {
             break;
         case APP_CMD_INIT_WINDOW:
             // The window is being shown, get it ready.
-            LOGI("Processing APP_CMD_INIT_WINDOW");
+            Log::Info("Processing APP_CMD_INIT_WINDOW");
             if (app->window != nullptr) {
                 event.type = EventType::APP_INIT;
                 event.appInitEvent = AppInitEvent(app->window);
@@ -53,7 +53,7 @@ void onAppCmd(android_app* app, int32_t cmd) {
         case APP_CMD_WINDOW_REDRAW_NEEDED:
             break;
         case APP_CMD_GAINED_FOCUS:
-            LOGI("Processing APP_CMD_GAINED_FOCUS");
+            Log::Info("Processing APP_CMD_GAINED_FOCUS");
             event.type = EventType::APP_RESUME;
             event.appResumeEvent = AppResumeEvent(app->window);
             break;
@@ -66,7 +66,7 @@ void onAppCmd(android_app* app, int32_t cmd) {
         case APP_CMD_SAVE_STATE:
         case APP_CMD_DESTROY:
         default:
-            LOGW("Unhandled Command %d", cmd);
+            Log::Warn("Unhandled Command %d", cmd);
     }
 }
 

@@ -27,7 +27,7 @@
 #include <android/log.h>
 #include <android_native_app_glue.h>
 
-#include "Core.h"
+#include "Log.h"
 
 MACE_NDK_START
 
@@ -78,7 +78,7 @@ private:
      * Unregister this thread from the VM
      */
     static void DetachCurrentThreadDtor(void* p) {
-        LOGI("detached current thread");
+        Log::Info("detached current thread");
         if (p != nullptr) {
             ANativeActivity *activity = (ANativeActivity *) p;
             activity->vm->DetachCurrentThread();

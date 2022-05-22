@@ -13,7 +13,7 @@ bool CompileShader(
     const std::map<std::string, std::string> &map_parameters) {
   std::vector<uint8_t> data;
   if (!mace::ndk::JNIHelper::GetInstance()->ReadFile(str_file_name, &data)) {
-    LOGI("Can not open a file:%s", str_file_name);
+    Log::Info("Can not open a file:%s", str_file_name);
     return false;
   }
 
@@ -45,7 +45,7 @@ bool CompileShader(
     it++;
   }
 
-  LOGI("Patched Shdader:\n%s", str.c_str());
+  Log::Info("Patched Shdader:\n%s", str.c_str());
 
   std::vector<uint8_t> v(str.begin(), str.end());
   str.clear();
@@ -68,7 +68,7 @@ bool CompileShader(GLuint *shader, const GLenum type,
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetShaderInfoLog(*shader, logLength, &logLength, log);
-    LOGI("Shader compile log:\n%s", log);
+    Log::Info("Shader compile log:\n%s", log);
     free(log);
   }
 #endif
@@ -97,7 +97,7 @@ bool CompileShader(GLuint *shader, const GLenum type,
   std::vector<uint8_t> data;
   bool b = mace::ndk::JNIHelper::GetInstance()->ReadFile(strFileName, &data);
   if (!b) {
-    LOGI("Can not open a file:%s", strFileName);
+    Log::Info("Can not open a file:%s", strFileName);
     return false;
   }
 
@@ -115,14 +115,14 @@ bool LinkProgram(const GLuint prog) {
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetProgramInfoLog(prog, logLength, &logLength, log);
-    LOGI("Program link log:\n%s", log);
+    Log::Info("Program link log:\n%s", log);
     free(log);
   }
 #endif
 
   glGetProgramiv(prog, GL_LINK_STATUS, &status);
   if (status == 0) {
-    LOGI("Program link failed\n");
+    Log::Info("Program link failed\n");
     return false;
   }
 
@@ -137,7 +137,7 @@ bool ValidateProgram(const GLuint prog) {
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetProgramInfoLog(prog, logLength, &logLength, log);
-    LOGI("Program validate log:\n%s", log);
+    Log::Info("Program validate log:\n%s", log);
     free(log);
   }
 

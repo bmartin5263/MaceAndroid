@@ -28,26 +28,17 @@ MACE_NDK_START
 
 #define NATIVEACTIVITY_CLASS_NAME "android/app/NativeActivity"
 
-//---------------------------------------------------------------------------
-// JNI Helper functions
-//---------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------
-// Singleton
-//---------------------------------------------------------------------------
 JNIHelper* JNIHelper::GetInstance() {
   static JNIHelper helper;
   return &helper;
 }
 
-//---------------------------------------------------------------------------
-// Ctor
-//---------------------------------------------------------------------------
-JNIHelper::JNIHelper() : activity_(NULL) {}
+JNIHelper::JNIHelper() :
+  activity_(nullptr)
+{
 
-//---------------------------------------------------------------------------
-// Dtor
-//---------------------------------------------------------------------------
+}
+
 JNIHelper::~JNIHelper() {
   // Lock mutex
   std::lock_guard<std::mutex> lock(mutex_);
@@ -59,9 +50,6 @@ JNIHelper::~JNIHelper() {
   DetachCurrentThread();
 }
 
-//---------------------------------------------------------------------------
-// Init
-//---------------------------------------------------------------------------
 void JNIHelper::Init(ANativeActivity* activity, const char* helper_class_name) {
   JNIHelper& helper = *GetInstance();
 
@@ -77,9 +65,9 @@ void JNIHelper::Init(ANativeActivity* activity, const char* helper_class_name) {
   jmethodID midGetPackageName = env->GetMethodID(
       android_content_Context, "getPackageName", "()Ljava/lang/String;");
 
-  jstring packageName = (jstring)env->CallObjectMethod(helper.activity_->clazz,
+  auto packageName = (jstring)env->CallObjectMethod(helper.activity_->clazz,
                                                        midGetPackageName);
-  const char* appname = env->GetStringUTFChars(packageName, NULL);
+  const char* appname = env->GetStringUTFChars(packageName, nullptr);
   helper.app_name_ = std::string(appname);
 
   jclass cls = helper.RetrieveClass(env, helper_class_name);
@@ -94,9 +82,9 @@ void JNIHelper::Init(ANativeActivity* activity, const char* helper_class_name) {
   helper.jni_helper_java_ref_ = env->NewGlobalRef(helper.jni_helper_java_ref_);
 
   // Get app label
-  jstring labelName = (jstring)helper.CallObjectMethod("getApplicationName",
+  auto labelName = (jstring)helper.CallObjectMethod("getApplicationName",
                                                        "()Ljava/lang/String;");
-  const char* label = env->GetStringUTFChars(labelName, NULL);
+  const char* label = env->GetStringUTFChars(labelName, nullptr);
   helper.app_label_ = std::string(label);
 
   env->ReleaseStringUTFChars(packageName, appname);
@@ -132,8 +120,8 @@ void JNIHelper::Init(ANativeActivity* activity, const char* helper_class_name,
 //---------------------------------------------------------------------------
 bool JNIHelper::ReadFile(const char* fileName,
                          std::vector<uint8_t>* buffer_ref) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized.Call init() to initialize the "
         "helper");
     return false;
@@ -148,7 +136,7 @@ bool JNIHelper::ReadFile(const char* fileName,
 
   std::string s;
   if(str_path) {
-    const char* path = env->GetStringUTFChars(str_path, NULL);
+    const char* path = env->GetStringUTFChars(str_path, nullptr);
     s = std::string(path);
     if (fileName[0] != '/') {
       s.append("/");
@@ -160,7 +148,7 @@ bool JNIHelper::ReadFile(const char* fileName,
   std::ifstream f(s.c_str(), std::ios::binary);
   activity_->vm->DetachCurrentThread();
   if (f) {
-    LOGI("reading:%s", s.c_str());
+    Log::Info("reading:%s", s.c_str());
     f.seekg(0, std::ifstream::end);
     int32_t fileSize = f.tellg();
     f.seekg(0, std::ifstream::beg);
@@ -179,10 +167,10 @@ bool JNIHelper::ReadFile(const char* fileName,
     }
     uint8_t* data = (uint8_t*)AAsset_getBuffer(assetFile);
     int32_t size = AAsset_getLength(assetFile);
-    if (data == NULL) {
+    if (data == nullptr) {
       AAsset_close(assetFile);
 
-      LOGI("Failed to load:%s", fileName);
+      Log::Info("Failed to load:%s", fileName);
       return false;
     }
 
@@ -195,8 +183,8 @@ bool JNIHelper::ReadFile(const char* fileName,
 }
 
 std::string JNIHelper::GetExternalFilesDir() {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return std::string("");
@@ -209,7 +197,7 @@ std::string JNIHelper::GetExternalFilesDir() {
   JNIEnv* env = AttachCurrentThread();
 
   jstring strPath = GetExternalFilesDirJString(env);
-  const char* path = env->GetStringUTFChars(strPath, NULL);
+  const char* path = env->GetStringUTFChars(strPath, nullptr);
   std::string s(path);
 
   env->ReleaseStringUTFChars(strPath, path);
@@ -219,8 +207,8 @@ std::string JNIHelper::GetExternalFilesDir() {
 
 uint32_t JNIHelper::LoadTexture(const char* file_name, int32_t* outWidth,
                                 int32_t* outHeight, bool* hasAlpha) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return 0;
@@ -257,17 +245,17 @@ uint32_t JNIHelper::LoadTexture(const char* file_name, int32_t* outWidth,
   if (!ret) {
     glDeleteTextures(1, &tex);
     tex = -1;
-    LOGI("Texture load failed %s", file_name);
+    Log::Info("Texture load failed %s", file_name);
   }
-  LOGI("Loaded texture original size:%dx%d alpha:%d", width, height,
+  Log::Info("Loaded texture original size:%dx%d alpha:%d", width, height,
        (int32_t)alpha);
-  if (outWidth != NULL) {
+  if (outWidth != nullptr) {
     *outWidth = width;
   }
-  if (outHeight != NULL) {
+  if (outHeight != nullptr) {
     *outHeight = height;
   }
-  if (hasAlpha != NULL) {
+  if (hasAlpha != nullptr) {
     *hasAlpha = alpha;
   }
 
@@ -285,8 +273,8 @@ uint32_t JNIHelper::LoadCubemapTexture(const char* file_name,
                                        const int32_t miplevel, const bool sRGB,
                                        int32_t* outWidth, int32_t* outHeight,
                                        bool* hasAlpha) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return 0;
@@ -315,17 +303,17 @@ uint32_t JNIHelper::LoadCubemapTexture(const char* file_name,
   int32_t width = env->GetIntField(out, fidWidth);
   int32_t height = env->GetIntField(out, fidHeight);
   if (!ret) {
-    LOGI("Texture load failed %s", file_name);
+    Log::Info("Texture load failed %s", file_name);
   }
-  LOGI("Loaded texture original size:%dx%d alpha:%d", width, height,
+  Log::Info("Loaded texture original size:%dx%d alpha:%d", width, height,
        (int32_t)alpha);
-  if (outWidth != NULL) {
+  if (outWidth != nullptr) {
     *outWidth = width;
   }
-  if (outHeight != NULL) {
+  if (outHeight != nullptr) {
     *outHeight = height;
   }
-  if (hasAlpha != NULL) {
+  if (hasAlpha != nullptr) {
     *hasAlpha = alpha;
   }
 
@@ -337,8 +325,8 @@ uint32_t JNIHelper::LoadCubemapTexture(const char* file_name,
 
 jobject JNIHelper::LoadImage(const char* file_name, int32_t* outWidth,
                              int32_t* outHeight, bool* hasAlpha) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return 0;
@@ -366,17 +354,17 @@ jobject JNIHelper::LoadImage(const char* file_name, int32_t* outWidth,
   int32_t width = env->GetIntField(out, fidWidth);
   int32_t height = env->GetIntField(out, fidHeight);
   if (!ret) {
-    LOGI("Texture load failed %s", file_name);
+    Log::Info("Texture load failed %s", file_name);
   }
-  LOGI("Loaded texture original size:%dx%d alpha:%d", width, height,
+  Log::Info("Loaded texture original size:%dx%d alpha:%d", width, height,
        (int32_t)alpha);
-  if (outWidth != NULL) {
+  if (outWidth != nullptr) {
     *outWidth = width;
   }
-  if (outHeight != NULL) {
+  if (outHeight != nullptr) {
     *outHeight = height;
   }
-  if (hasAlpha != NULL) {
+  if (hasAlpha != nullptr) {
     *hasAlpha = alpha;
   }
 
@@ -391,8 +379,8 @@ jobject JNIHelper::LoadImage(const char* file_name, int32_t* outWidth,
 }
 
 std::string JNIHelper::ConvertString(const char* str, const char* encode) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return std::string("");
@@ -415,7 +403,7 @@ std::string JNIHelper::ConvertString(const char* str, const char* encode) {
   jmethodID ctor = env->GetMethodID(cls, "<init>", "([BLjava/lang/String;)V");
   jstring object = (jstring)env->NewObject(cls, ctor, array, strEncode);
 
-  const char* cparam = env->GetStringUTFChars(object, NULL);
+  const char* cparam = env->GetStringUTFChars(object, nullptr);
 
   std::string s = std::string(cparam);
 
@@ -425,7 +413,7 @@ std::string JNIHelper::ConvertString(const char* str, const char* encode) {
   env->DeleteLocalRef(object);
   env->DeleteLocalRef(cls);
 
-  env->PopLocalFrame(NULL);
+  env->PopLocalFrame(nullptr);
 
   return s;
 }
@@ -437,8 +425,8 @@ std::string JNIHelper::ConvertString(const char* str, const char* encode) {
  * with given name
  */
 std::string JNIHelper::GetStringResource(const std::string& resourceName) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return std::string("");
@@ -454,7 +442,7 @@ std::string JNIHelper::GetStringResource(const std::string& resourceName) {
   jstring ret = (jstring)CallObjectMethod(
       "getStringResource", "(Ljava/lang/String;)Ljava/lang/String;", name);
 
-  const char* resource = env->GetStringUTFChars(ret, NULL);
+  const char* resource = env->GetStringUTFChars(ret, nullptr);
   std::string s = std::string(resource);
 
   env->ReleaseStringUTFChars(ret, resource);
@@ -467,8 +455,8 @@ std::string JNIHelper::GetStringResource(const std::string& resourceName) {
  * Audio helpers
  */
 int32_t JNIHelper::GetNativeAudioBufferSize() {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return 0;
@@ -482,8 +470,8 @@ int32_t JNIHelper::GetNativeAudioBufferSize() {
 }
 
 int32_t JNIHelper::GetNativeAudioSampleRate() {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return 0;
@@ -518,11 +506,11 @@ jclass JNIHelper::RetrieveClass(JNIEnv* jni, const char* class_name) {
 }
 
 jstring JNIHelper::GetExternalFilesDirJString(JNIEnv* env) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
-    return NULL;
+    return nullptr;
   }
 
   jstring obj_Path = nullptr;
@@ -530,7 +518,7 @@ jstring JNIHelper::GetExternalFilesDirJString(JNIEnv* env) {
   jclass cls_Env = env->FindClass(NATIVEACTIVITY_CLASS_NAME);
   jmethodID mid = env->GetMethodID(cls_Env, "getExternalFilesDir",
                                    "(Ljava/lang/String;)Ljava/io/File;");
-  jobject obj_File = env->CallObjectMethod(activity_->clazz, mid, NULL);
+  jobject obj_File = env->CallObjectMethod(activity_->clazz, mid, nullptr);
   if (obj_File) {
     jclass cls_File = env->FindClass("java/io/File");
     jmethodID mid_getPath =
@@ -541,8 +529,8 @@ jstring JNIHelper::GetExternalFilesDirJString(JNIEnv* env) {
 }
 
 void JNIHelper::DeleteObject(jobject obj) {
-  if (obj == NULL) {
-    LOGI("obj can not be NULL");
+  if (obj == nullptr) {
+    Log::Info("obj can not be nullptr");
     return;
   }
 
@@ -552,19 +540,19 @@ void JNIHelper::DeleteObject(jobject obj) {
 
 jobject JNIHelper::CallObjectMethod(const char* strMethodName,
                                     const char* strSignature, ...) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
-    return NULL;
+    return nullptr;
   }
 
   JNIEnv* env = AttachCurrentThread();
   jmethodID mid =
       env->GetMethodID(jni_helper_java_class_, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
-    return NULL;
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
+    return nullptr;
   }
 
   va_list args;
@@ -577,8 +565,8 @@ jobject JNIHelper::CallObjectMethod(const char* strMethodName,
 
 void JNIHelper::CallVoidMethod(const char* strMethodName,
                                const char* strSignature, ...) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return;
@@ -587,8 +575,8 @@ void JNIHelper::CallVoidMethod(const char* strMethodName,
   JNIEnv* env = AttachCurrentThread();
   jmethodID mid =
       env->GetMethodID(jni_helper_java_class_, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
     return;
   }
   va_list args;
@@ -601,19 +589,19 @@ void JNIHelper::CallVoidMethod(const char* strMethodName,
 
 jobject JNIHelper::CallObjectMethod(jobject object, const char* strMethodName,
                                     const char* strSignature, ...) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
-    return NULL;
+    return nullptr;
   }
 
   JNIEnv* env = AttachCurrentThread();
   jclass cls = env->GetObjectClass(object);
   jmethodID mid = env->GetMethodID(cls, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
-    return NULL;
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
+    return nullptr;
   }
 
   va_list args;
@@ -627,8 +615,8 @@ jobject JNIHelper::CallObjectMethod(jobject object, const char* strMethodName,
 
 void JNIHelper::CallVoidMethod(jobject object, const char* strMethodName,
                                const char* strSignature, ...) {
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return;
@@ -637,8 +625,8 @@ void JNIHelper::CallVoidMethod(jobject object, const char* strMethodName,
   JNIEnv* env = AttachCurrentThread();
   jclass cls = env->GetObjectClass(object);
   jmethodID mid = env->GetMethodID(cls, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
     return;
   }
 
@@ -654,8 +642,8 @@ void JNIHelper::CallVoidMethod(jobject object, const char* strMethodName,
 float JNIHelper::CallFloatMethod(jobject object, const char* strMethodName,
                                  const char* strSignature, ...) {
   float f = 0.f;
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return f;
@@ -664,8 +652,8 @@ float JNIHelper::CallFloatMethod(jobject object, const char* strMethodName,
   JNIEnv* env = AttachCurrentThread();
   jclass cls = env->GetObjectClass(object);
   jmethodID mid = env->GetMethodID(cls, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
     return f;
   }
   va_list args;
@@ -680,8 +668,8 @@ float JNIHelper::CallFloatMethod(jobject object, const char* strMethodName,
 int32_t JNIHelper::CallIntMethod(jobject object, const char* strMethodName,
                                  const char* strSignature, ...) {
   int32_t i = 0;
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return i;
@@ -690,8 +678,8 @@ int32_t JNIHelper::CallIntMethod(jobject object, const char* strMethodName,
   JNIEnv* env = AttachCurrentThread();
   jclass cls = env->GetObjectClass(object);
   jmethodID mid = env->GetMethodID(cls, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
     return i;
   }
   va_list args;
@@ -706,8 +694,8 @@ int32_t JNIHelper::CallIntMethod(jobject object, const char* strMethodName,
 bool JNIHelper::CallBooleanMethod(jobject object, const char* strMethodName,
                                   const char* strSignature, ...) {
   bool b;
-  if (activity_ == NULL) {
-    LOGI(
+  if (activity_ == nullptr) {
+    Log::Info(
         "JNIHelper has not been initialized. Call init() to initialize the "
         "helper");
     return false;
@@ -716,8 +704,8 @@ bool JNIHelper::CallBooleanMethod(jobject object, const char* strMethodName,
   JNIEnv* env = AttachCurrentThread();
   jclass cls = env->GetObjectClass(object);
   jmethodID mid = env->GetMethodID(cls, strMethodName, strSignature);
-  if (mid == NULL) {
-    LOGI("method ID %s, '%s' not found", strMethodName, strSignature);
+  if (mid == nullptr) {
+    Log::Info("method ID %s, '%s' not found", strMethodName, strSignature);
     return false;
   }
   va_list args;
@@ -747,8 +735,8 @@ void JNIHelper::RunOnUiThread(std::function<void()> callback) {
   std::lock_guard<std::mutex> lock(mutex_);
 
   JNIEnv* env = AttachCurrentThread();
-  static jmethodID mid = NULL;
-  if (mid == NULL)
+  static jmethodID mid = nullptr;
+  if (mid == nullptr)
     mid = env->GetMethodID(jni_helper_java_class_, "runOnUIThread", "(J)V");
 
   // Allocate temporary function object to be passed around

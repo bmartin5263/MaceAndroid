@@ -29,7 +29,7 @@ OriginalEngine::OriginalEngine(android_app* app):
     dragDetector.setConfiguration(this->app->config);
     pinchDetector.setConfiguration(this->app->config);
     teapotRender.bind(&tapCamera);
-    LOGI("Engine Initialized");
+    Log::Info("Engine Initialized");
 }
 
 void OriginalEngine::loadResources() {
@@ -45,7 +45,7 @@ void OriginalEngine::unloadResources() {
  */
 int OriginalEngine::initWindow(android_app* app) {
     if (!initialized) {
-        LOGW("Engine::initWindow initializing resources");
+        Log::Warn("Engine::initWindow initializing resources");
         glContext.init(app->window);
         loadResources();
         initialized = true;
@@ -53,7 +53,7 @@ int OriginalEngine::initWindow(android_app* app) {
     else if (app->window != glContext.getANativeWindow()) {
         // Re-initialize ANativeWindow.
         // On some devices, ANativeWindow is re-created when the app is resumed
-        LOGW("Engine::initWindow reinitializing resources");
+        Log::Warn("Engine::initWindow reinitializing resources");
         assert(glContext.getANativeWindow());
         unloadResources();
         glContext.invalidate();
@@ -63,7 +63,7 @@ int OriginalEngine::initWindow(android_app* app) {
         initialized = true;
     } else {
         // initialize OpenGL ES and EGL
-        LOGW("Engine::initWindow resuming");
+        Log::Warn("Engine::initWindow resuming");
         if (EGL_SUCCESS == glContext.resume(app->window)) {
             unloadResources();
             loadResources();
@@ -116,7 +116,7 @@ void OriginalEngine::drawFrame() {
 
     // Swap
     if (EGL_SUCCESS != glContext.swap()) {
-        LOGW("Engine::drawFrame() - swap failed");
+        Log::Warn("Engine::drawFrame() - swap failed");
         unloadResources();
         loadResources();
     }
@@ -205,7 +205,7 @@ void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
 }
 
 void OriginalEngine::showUI() {
-    LOGI("Engine::showUI()");
+    Log::Info("Engine::showUI()");
     JNIEnv *jni;
     app->activity->vm->AttachCurrentThread(&jni, nullptr);
 
@@ -255,11 +255,11 @@ bool OriginalEngine::update() {
         // 3 = Clock tick?
 //        Log::Warn("Update: %d", id);
         if (id != 3) {
-            LOGW("Update: %d", id);
+            Log::Warn("Update: %d", id);
         }
         // Process this event.
         if (source != nullptr) {
-            LOGE("Source Process: %d", id);
+            Log::Error("Source Process: %d", id);
             source->process(app, source);
         }
 
@@ -291,17 +291,17 @@ void OriginalEngine::draw() {
 void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
     switch (cmd) {
         case APP_CMD_START:
-            LOGI("Processing APP_CMD_START");
+            Log::Info("Processing APP_CMD_START");
             break;
         case APP_CMD_RESUME:
-            LOGI("Processing APP_CMD_RESUME");
+            Log::Info("Processing APP_CMD_RESUME");
             break;
         case APP_CMD_INPUT_CHANGED:
-            LOGI("Processing APP_CMD_INPUT_CHANGED");
+            Log::Info("Processing APP_CMD_INPUT_CHANGED");
             break;
         case APP_CMD_INIT_WINDOW:
             // The window is being shown, get it ready.
-            LOGI("Processing APP_CMD_INIT_WINDOW");
+            Log::Info("Processing APP_CMD_INIT_WINDOW");
             if (app->window != nullptr) {
                 initWindow(app);
                 focused = true;
@@ -309,36 +309,36 @@ void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
             }
             break;
         case APP_CMD_WINDOW_RESIZED:
-            LOGI("Processing APP_CMD_WINDOW_RESIZED");
+            Log::Info("Processing APP_CMD_WINDOW_RESIZED");
             break;
         case APP_CMD_CONTENT_RECT_CHANGED:
-            LOGI("Processing APP_CMD_CONTENT_RECT_CHANGED");
+            Log::Info("Processing APP_CMD_CONTENT_RECT_CHANGED");
             break;
         case APP_CMD_WINDOW_REDRAW_NEEDED:
-            LOGI("Processing APP_CMD_WINDOW_REDRAW_NEEDED");
+            Log::Info("Processing APP_CMD_WINDOW_REDRAW_NEEDED");
             break;
         case APP_CMD_GAINED_FOCUS:
-            LOGI("Processing APP_CMD_GAINED_FOCUS");
+            Log::Info("Processing APP_CMD_GAINED_FOCUS");
             sensorManager.resume();
             // Start animation
             focused = true;
             break;
         case APP_CMD_CONFIG_CHANGED:
-            LOGI("Processing APP_CMD_CONFIG_CHANGED");
+            Log::Info("Processing APP_CMD_CONFIG_CHANGED");
             break;
         case APP_CMD_LOW_MEMORY:
             // Free up GL resources
-            LOGI("Processing APP_CMD_LOW_MEMORY");
+            Log::Info("Processing APP_CMD_LOW_MEMORY");
             trimMemory();
             break;
         // Following cases executed in order when navigating away
         case APP_CMD_PAUSE:
-            LOGI("Processing APP_CMD_PAUSE");
+            Log::Info("Processing APP_CMD_PAUSE");
             break;
 
         case APP_CMD_LOST_FOCUS:
             // Can occur when looking at all apps scroll view
-            LOGI("Processing APP_CMD_LOST_FOCUS");
+            Log::Info("Processing APP_CMD_LOST_FOCUS");
             sensorManager.suspend();
             // Also stop animating.
             focused = false;
@@ -346,21 +346,21 @@ void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
             break;
         case APP_CMD_TERM_WINDOW:
             // The window is being hidden or closed, clean it up.
-            LOGI("Processing APP_CMD_TERM_WINDOW");
+            Log::Info("Processing APP_CMD_TERM_WINDOW");
             termWindow();
             focused = false;
             break;
         case APP_CMD_STOP:
-            LOGI("Processing APP_CMD_STOP");
+            Log::Info("Processing APP_CMD_STOP");
             break;
         case APP_CMD_SAVE_STATE:
-            LOGI("Processing APP_CMD_SAVE_STATE");
+            Log::Info("Processing APP_CMD_SAVE_STATE");
             break;
         case APP_CMD_DESTROY:
-            LOGI("Processing APP_CMD_DESTROY");
+            Log::Info("Processing APP_CMD_DESTROY");
             break;
         default:
-            LOGW("Unhandled Command %d", cmd);
+            Log::Warn("Unhandled Command %d", cmd);
     }
 }
 
