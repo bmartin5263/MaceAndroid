@@ -25,15 +25,14 @@ class Mat4;
  *
  */
 class Vec2 {
- private:
-  float x_;
-  float y_;
-
  public:
   friend class Vec3;
   friend class Vec4;
   friend class Mat4;
   friend class Quaternion;
+
+  float x_;
+  float y_;
 
   Vec2() { x_ = y_ = 0.f; }
 

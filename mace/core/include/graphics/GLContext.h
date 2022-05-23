@@ -1,6 +1,7 @@
 #ifndef GLCONTEXT_H_
 #define GLCONTEXT_H_
 
+#include <Egl.h>
 #include "EGL/egl.h"
 #include "GLES2/gl2.h"
 #include "android/log.h"
@@ -32,48 +33,24 @@ public:
     virtual ~GLContext();
 
     void init(ANativeWindow* window);
-    void reinit(ANativeWindow* window);
-    bool destroy();
-
-    EGLint resume(ANativeWindow* window);
     void suspend();
+    void resume(ANativeWindow* window);
 
-    EGLint swap();
+    void swap();
 
-    ANativeWindow* getANativeWindow() const { return window; };
-    int32_t getScreenWidth() const { return width; }
-    int32_t getScreenHeight() const { return height; }
+    ANativeWindow* getWindow() const { return window; };
+    int32_t getScreenWidth() const { return egl.getWidth(); }
+    int32_t getScreenHeight() const { return egl.getHeight(); }
     bool isInitialized() const { return initialized; }
+    float getGLVersion() const { return glVersion; }
 
 private:
-    // EGL configurations
-    ANativeWindow* window;      // provided by Platform
-    EGLDisplay display;         // created when starting EGL
-    EGLSurface surface;         // has width/height
-    EGLContext context;
-    EGLConfig config;
-
-    // Screen parameters
-    int32_t width;
-    int32_t height;
-    int32_t colorSize;
-    int32_t depthSize;
-
-    // Flags
-    bool initialized;
+    Egl egl;
+    ANativeWindow* window;
     float glVersion;
+    bool initialized;
 
     void terminate();
-    void initEGLDisplay();
-    void initEGLConfigs();
-    void initEGLSurface();
-    void initEGLContext();
-
-    int32_t getBufferColorSize() const { return colorSize; }
-    int32_t getBufferDepthSize() const { return depthSize; }
-    float getGLVersion() const { return glVersion; }
-    EGLDisplay getDisplay() const { return display; }
-    EGLSurface getSurface() const { return surface; }
 };
 
 MACE_END

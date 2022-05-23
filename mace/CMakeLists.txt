@@ -38,6 +38,7 @@ IF(ANDROID)
             ndk/src/AssetUtil.cpp
             ndk/src/OriginalEngine.cpp
             ndk/src/Util.cpp
+            ndk/src/Egl.cpp
 
             core/src/CoreEngine.cpp
             core/src/Clock.cpp

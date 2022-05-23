@@ -34,7 +34,6 @@ public:
     void unloadResources();
     void drawFrame();
     void termWindow();
-    void trimMemory();
     bool hasFocus() const;
 
     void handleCmd(android_app* app, int32_t cmd);
@@ -44,7 +43,6 @@ public:
     static int32_t OnInputEvent(android_app* app, AInputEvent* event);
 
 private:
-    void showUI();
     void updateFPS();
 
     void transformPosition(mace::Vec2 &vec);

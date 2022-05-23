@@ -54,10 +54,9 @@ int OriginalEngine::initWindow(android_app* app) {
         tapCamera.setPinchTransformFactor(2.f, 2.f, 8.f);
     }
     else {
-        glContext.reinit(app->window);
+        glContext.resume(app->window);
     }
     teapotRender.updateViewport();
-
 
     return 0;
 }
@@ -86,12 +85,7 @@ void OriginalEngine::drawFrame() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     teapotRender.render();
 
-    // Swap
-    if (EGL_SUCCESS != glContext.swap()) {
-        WARN("Engine::drawFrame() - swap failed")
-        unloadResources();
-        loadResources();
-    }
+    glContext.swap();
 }
 
 /**
@@ -99,10 +93,6 @@ void OriginalEngine::drawFrame() {
  */
 void OriginalEngine::termWindow() {
     glContext.suspend();
-}
-
-void OriginalEngine::trimMemory() {
-    ERROR("Trimming memory")
 }
 
 void OriginalEngine::handleDrag(AInputEvent* event) {
@@ -166,9 +156,12 @@ bool OriginalEngine::hasFocus() const {
 void OriginalEngine::transformPosition(Vec2 &vec) {
     auto w = static_cast<float>(glContext.getScreenWidth());
     auto h = static_cast<float>(glContext.getScreenHeight());
+    DBUG("In  Vec2(x=%d, y=%d)", vec.x_, vec.y_)
     vec = Vec2(2.0f, 2.0f) * vec /
           Vec2(w,h) -
           Vec2(1.f, 1.f);
+    DBUG("Out Vec2(x=%d, y=%d)", vec.x_, vec.y_)
+
 }
 
 void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
@@ -176,17 +169,17 @@ void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
     transformPosition(v2);
 }
 
-void OriginalEngine::showUI() {
-    JNIEnv *jni;
-    app->activity->vm->AttachCurrentThread(&jni, nullptr);
-
-    // Default class retrieval
-    jclass clazz = jni->GetObjectClass(app->activity->clazz);
-    jmethodID methodID = jni->GetMethodID(clazz, "showUI", "()V");
-    jni->CallVoidMethod(app->activity->clazz, methodID);
-
-    app->activity->vm->DetachCurrentThread();
-}
+//void OriginalEngine::showUI() {
+//    JNIEnv *jni;
+//    app->activity->vm->AttachCurrentThread(&jni, nullptr);
+//
+//    // Default class retrieval
+//    jclass clazz = jni->GetObjectClass(app->activity->clazz);
+//    jmethodID methodID = jni->GetMethodID(clazz, "showUI", "()V");
+//    jni->CallVoidMethod(app->activity->clazz, methodID);
+//
+//    app->activity->vm->DetachCurrentThread();
+//}
 
 const char* HELPER_CLASS_NAME = "dev/bdon/helper/NDKHelper";
 
@@ -268,33 +261,24 @@ void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
     WARN("Processing Command: %s", mace::ndk::getCommandString(cmd));
     switch (cmd) {
         case APP_CMD_INIT_WINDOW:
+            ASSERT(app->window != nullptr, "Received nullptr for window")
             // The window is being shown, get it ready.
-            if (app->window != nullptr) {
-                initWindow(app);
-                focused = true;
-                drawFrame();
-            }
+            initWindow(app);
+//            drawFrame();
             break;
         case APP_CMD_GAINED_FOCUS:
             sensorManager.resume();
-            // Start animation
             focused = true;
             break;
-        // Following cases executed in order when navigating away
         case APP_CMD_LOST_FOCUS:
-            // Can occur when looking at all apps scroll view
             sensorManager.suspend();
-            // Also stop animating.
             focused = false;
             drawFrame();
             break;
         case APP_CMD_TERM_WINDOW:
-            // The window is being hidden or closed, clean it up.
             termWindow();
-            focused = false;
             break;
         default:
-            // Do nothing
             break;
     }
 }
