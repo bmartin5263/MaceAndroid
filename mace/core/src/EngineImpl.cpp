@@ -22,11 +22,11 @@ void EngineImpl::launch() {
 }
 
 void EngineImpl::update() {
-    Log::Error("EngineImpl::update()");
+    ERROR("EngineImpl::update()");
 }
 
 void EngineImpl::draw() {
-    Log::Error("EngineImpl::draw()");
+    ERROR("EngineImpl::draw()");
 }
 
 bool EngineImpl::isRunning() {

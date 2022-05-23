@@ -22,11 +22,10 @@ MACE_START
  *     - texture unit 0, sampler unit 0
  */
 class Texture {
-  protected:
+  public:
+
     Texture() = default;
     virtual ~Texture() = default;
-
-  public:
     /**
      *   Create a texture object
      * @param type  should be GL_TEXTURE_2D / GL_TEXTURE_CUBE_MAP
@@ -38,7 +37,6 @@ class Texture {
      */
     static Texture* Create( GLuint type, std::vector<std::string>& texFiles,
               AAssetManager* assetManager);
-    static void Delete(Texture *obj);
 
     virtual bool GetActiveSamplerInfo(std::vector<std::string> &names,
                                       std::vector<GLint> &units) = 0;

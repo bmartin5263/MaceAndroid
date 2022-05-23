@@ -38,11 +38,11 @@ class TexturedTeapotRenderer : public TeapotRenderer {
     virtual GLint getTextureType(void);
     virtual void init(AAssetManager* amgr);
     virtual void render();
-    virtual void unload();
+    virtual void destroy();
 
 private:
-    GLuint texVbo_ = GL_INVALID_VALUE;
-    Texture* texObj_ = nullptr;
+    GLuint texVbo = GL_INVALID_VALUE;
+    Texture* texture = nullptr;
 
 };
 

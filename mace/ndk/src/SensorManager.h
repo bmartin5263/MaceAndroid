@@ -24,7 +24,7 @@ public:
     void init(android_app* app);
     void resume();
     void suspend();
-    void process(int32_t id);
+    void process();
 
 private:
     const ASensor* accelerometerSensor{nullptr};

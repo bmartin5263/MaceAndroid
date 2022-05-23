@@ -74,7 +74,7 @@ public:
     virtual GLint getTextureType() = 0;
 
     virtual void render();
-    virtual void unload();
+    virtual void destroy();
 
     void update(float dTime);
     void bind(TapCamera* camera);

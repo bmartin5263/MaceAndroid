@@ -37,6 +37,7 @@ IF(ANDROID)
             ndk/src/AndroidLog.cpp
             ndk/src/AssetUtil.cpp
             ndk/src/OriginalEngine.cpp
+            ndk/src/Util.cpp
 
             core/src/CoreEngine.cpp
             core/src/Clock.cpp

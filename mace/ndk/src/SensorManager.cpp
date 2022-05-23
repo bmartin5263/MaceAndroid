@@ -40,13 +40,11 @@ void SensorManager::suspend() {
     }
 }
 
-void SensorManager::process(int32_t id) {
-    if (id == LOOPER_ID_USER) {
-        if (accelerometerSensor != nullptr) {
-            ASensorEvent event;
-            while (ASensorEventQueue_getEvents(sensorEventQueue, &event, 1) > 0) {
-                // Do Nothing
-            }
+void SensorManager::process() {
+    if (accelerometerSensor != nullptr) {
+        ASensorEvent event;
+        while (ASensorEventQueue_getEvents(sensorEventQueue, &event, 1) > 0) {
+            // Do Nothing
         }
     }
 }

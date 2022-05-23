@@ -26,7 +26,7 @@
 MACE_START
 
 TeapotRenderer::~TeapotRenderer() {
-    unload();
+    destroy();
 }
 
 void TeapotRenderer::init() {
@@ -98,7 +98,7 @@ void TeapotRenderer::updateViewport() {
     }
 }
 
-void TeapotRenderer::unload() {
+void TeapotRenderer::destroy() {
     if (vbo) {
         glDeleteBuffers(1, &vbo);
         vbo = 0;
@@ -192,12 +192,12 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
 
     // Create shader program
     program = glCreateProgram();
-    Log::Info("Created Shader %d", program);
+    INFO("Created Shader %d", program);
 
     // Create and compile vertex shader
     if (!CompileShader(&vert_shader, GL_VERTEX_SHADER,
                                            strVsh)) {
-        Log::Info("Failed to compile vertex shader");
+        INFO("Failed to compile vertex shader");
         glDeleteProgram(program);
         assert(false);
         return false;
@@ -206,7 +206,7 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
     // Create and compile fragment shader
     if (!CompileShader(&frag_shader, GL_FRAGMENT_SHADER,
                                            strFsh)) {
-        Log::Info("Failed to compile fragment shader");
+        INFO("Failed to compile fragment shader");
         glDeleteProgram(program);
         assert(false);
         return false;
@@ -226,7 +226,7 @@ bool TeapotRenderer::LoadShaders(ShaderParams *params, const char *strVsh,
 
     // Link program
     if (!LinkProgram(program)) {
-        Log::Info("Failed to link program: %d", program);
+        INFO("Failed to link program: %d", program);
 
         if (vert_shader) {
             glDeleteShader(vert_shader);

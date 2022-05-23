@@ -28,11 +28,11 @@ TexturedTeapotRenderer::TexturedTeapotRenderer() {}
 
 /**
  * Destructor:
- *     let unload() do the work, which should also trigger
- *     TeapotRenderer's unload() function
+ *     let destroy() do the work, which should also trigger
+ *     TeapotRenderer's destroy() function
  */
 TexturedTeapotRenderer::~TexturedTeapotRenderer() {
-    unload();
+    destroy();
 };
 
 /**
@@ -44,7 +44,7 @@ TexturedTeapotRenderer::~TexturedTeapotRenderer() {
  *   GL_TEXTURE_2D if just to render a 2D textured teapot
  *   GL_INVALID_VALUE no texture for teapot
  */
-GLint TexturedTeapotRenderer::getTextureType(void) {
+GLint TexturedTeapotRenderer::getTextureType() {
     return
             GL_TEXTURE_CUBE_MAP;
 //            GL_TEXTURE_2D;
@@ -72,15 +72,15 @@ void TexturedTeapotRenderer::init(AAssetManager* assetMgr) {
     // to sample cubemap.
     if(type == GL_TEXTURE_2D) {
         // do Texture related initializations...
-        glGenBuffers(1, &texVbo_);
-        assert(texVbo_ != GL_INVALID_VALUE);
+        glGenBuffers(1, &texVbo);
+        assert(texVbo != GL_INVALID_VALUE);
 
         /*
          * Loading Texture coord directly from data declared in model file
          *   teapot.inl
          * which is 3 floats/vertex.
          */
-        glBindBuffer(GL_ARRAY_BUFFER, texVbo_);
+        glBindBuffer(GL_ARRAY_BUFFER, texVbo);
 
 #if (TILED_TEXTURE)
         glBufferData(GL_ARRAY_BUFFER,
@@ -118,19 +118,19 @@ void TexturedTeapotRenderer::init(AAssetManager* assetMgr) {
         textures[0] = std::string("Textures/front.tga");
     }
 
-    texObj_ = Texture::Create(type, textures, assetMgr);
-    assert(texObj_);
+    texture = Texture::Create(type, textures, assetMgr);
+    assert(texture);
 
     std::vector<std::string> samplers;
     std::vector<GLint> units;
-    texObj_->GetActiveSamplerInfo(samplers, units);
+    texture->GetActiveSamplerInfo(samplers, units);
     for(size_t idx = 0; idx < samplers.size(); idx++) {
         GLint sampler = glGetUniformLocation(shaderParams.program,
                                              samplers[idx].c_str());
         glUniform1i(sampler, units[idx]);
     }
 
-    texObj_->Activate();
+    texture->Activate();
 }
 
 /**
@@ -143,19 +143,16 @@ void TexturedTeapotRenderer::render() {
 }
 
 /**
- * unload()
+ * destroy()
  *    clean-up function. May get called from destructor too
  */
-void TexturedTeapotRenderer::unload() {
-    TeapotRenderer::unload();
-    if(texVbo_ != GL_INVALID_VALUE) {
-        glDeleteBuffers(1, &texVbo_);
-        texVbo_ = GL_INVALID_VALUE;
+void TexturedTeapotRenderer::destroy() {
+    TeapotRenderer::destroy();
+    if(texVbo != GL_INVALID_VALUE) {
+        glDeleteBuffers(1, &texVbo);
+        texVbo = GL_INVALID_VALUE;
     }
-    if(texObj_) {
-        Texture::Delete(texObj_);
-        texObj_ = nullptr;
-    }
+    del(texture)
 }
 
 MACE_END

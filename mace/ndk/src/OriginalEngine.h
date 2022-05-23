@@ -54,7 +54,6 @@ private:
     void handlePinch(AInputEvent *event);
     inline void transformPosition(mace::Vec2 &v1, mace::Vec2 &v2);
 
-    bool initialized;
     bool focused;
 
     android_app* app;

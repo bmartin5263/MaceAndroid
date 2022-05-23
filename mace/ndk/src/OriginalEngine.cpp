@@ -17,11 +17,11 @@
 #include "OriginalEngine.h"
 #include "CoreEngine.h"
 #include "Log.h"
+#include "Util.h"
 
 using namespace mace;
 
 OriginalEngine::OriginalEngine(android_app* app):
-    initialized(false),
     focused(false),
     app(app)
 {
@@ -29,63 +29,35 @@ OriginalEngine::OriginalEngine(android_app* app):
     dragDetector.setConfiguration(this->app->config);
     pinchDetector.setConfiguration(this->app->config);
     teapotRender.bind(&tapCamera);
-    Log::Info("Engine Initialized");
+    WARN("Constructed");
 }
 
 void OriginalEngine::loadResources() {
+    INFO("Loading Resources")
     teapotRender.init(app->activity->assetManager);
 }
 
 void OriginalEngine::unloadResources() {
-    teapotRender.unload();
+    INFO("Unloading Resources")
+    teapotRender.destroy();
 }
 
 /**
  * Initialize an EGL context for the current display.
  */
 int OriginalEngine::initWindow(android_app* app) {
-    if (!initialized) {
-        Log::Warn("Engine::initWindow initializing resources");
+    if (!glContext.isInitialized()) {
         glContext.init(app->window);
+
         loadResources();
-        initialized = true;
+        tapCamera.setFlip(1.f, -1.f, -1.f);
+        tapCamera.setPinchTransformFactor(2.f, 2.f, 8.f);
     }
-    else if (app->window != glContext.getANativeWindow()) {
-        // Re-initialize ANativeWindow.
-        // On some devices, ANativeWindow is re-created when the app is resumed
-        Log::Warn("Engine::initWindow reinitializing resources");
-        assert(glContext.getANativeWindow());
-        unloadResources();
-        glContext.invalidate();
-        this->app = app;
-        glContext.init(app->window);
-        loadResources();
-        initialized = true;
-    } else {
-        // initialize OpenGL ES and EGL
-        Log::Warn("Engine::initWindow resuming");
-        if (EGL_SUCCESS == glContext.resume(app->window)) {
-            unloadResources();
-            loadResources();
-        } else {
-            assert(false);
-        }
+    else {
+        glContext.reinit(app->window);
     }
-
-    showUI();
-
-    // Initialize GL state.
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    // Note that screen size might have been changed
-    glViewport(0, 0, glContext.getScreenWidth(),
-               glContext.getScreenHeight());
     teapotRender.updateViewport();
 
-    tapCamera.setFlip(1.f, -1.f, -1.f);
-    tapCamera.setPinchTransformFactor(2.f, 2.f, 8.f);
 
     return 0;
 }
@@ -116,7 +88,7 @@ void OriginalEngine::drawFrame() {
 
     // Swap
     if (EGL_SUCCESS != glContext.swap()) {
-        Log::Warn("Engine::drawFrame() - swap failed");
+        WARN("Engine::drawFrame() - swap failed")
         unloadResources();
         loadResources();
     }
@@ -130,7 +102,7 @@ void OriginalEngine::termWindow() {
 }
 
 void OriginalEngine::trimMemory() {
-    Log::Error("Trimming memory");
+    ERROR("Trimming memory")
 }
 
 void OriginalEngine::handleDrag(AInputEvent* event) {
@@ -205,7 +177,6 @@ void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
 }
 
 void OriginalEngine::showUI() {
-    Log::Info("Engine::showUI()");
     JNIEnv *jni;
     app->activity->vm->AttachCurrentThread(&jni, nullptr);
 
@@ -235,7 +206,7 @@ void OriginalEngine::run() {
         draw();
     }
 
-    Log::Error("Shutdown");
+    ERROR("Shutdown")
 }
 
 bool OriginalEngine::update() {
@@ -253,17 +224,22 @@ bool OriginalEngine::update() {
         // 1 = Command (source != null)
         // 2 = Input Event (source != null)
         // 3 = Clock tick?
-//        Log::Warn("Update: %d", id);
-        if (id != 3) {
-            Log::Warn("Update: %d", id);
+
+        if (id > 3) {
+            WARN("Polled: %d", id)
         }
+
         // Process this event.
         if (source != nullptr) {
-            Log::Error("Source Process: %d", id);
+            if (id > 3) {
+                WARN("Source Process: %d", id)
+            }
             source->process(app, source);
         }
 
-        sensorManager.process(id);
+        if (id == LOOPER_ID_USER) {
+            sensorManager.process();
+        }
 
         // Check if we are exiting.
         if (app->destroyRequested != 0) {
@@ -289,56 +265,24 @@ void OriginalEngine::draw() {
 }
 
 void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
+    WARN("Processing Command: %s", mace::ndk::getCommandString(cmd));
     switch (cmd) {
-        case APP_CMD_START:
-            Log::Info("Processing APP_CMD_START");
-            break;
-        case APP_CMD_RESUME:
-            Log::Info("Processing APP_CMD_RESUME");
-            break;
-        case APP_CMD_INPUT_CHANGED:
-            Log::Info("Processing APP_CMD_INPUT_CHANGED");
-            break;
         case APP_CMD_INIT_WINDOW:
             // The window is being shown, get it ready.
-            Log::Info("Processing APP_CMD_INIT_WINDOW");
             if (app->window != nullptr) {
                 initWindow(app);
                 focused = true;
                 drawFrame();
             }
             break;
-        case APP_CMD_WINDOW_RESIZED:
-            Log::Info("Processing APP_CMD_WINDOW_RESIZED");
-            break;
-        case APP_CMD_CONTENT_RECT_CHANGED:
-            Log::Info("Processing APP_CMD_CONTENT_RECT_CHANGED");
-            break;
-        case APP_CMD_WINDOW_REDRAW_NEEDED:
-            Log::Info("Processing APP_CMD_WINDOW_REDRAW_NEEDED");
-            break;
         case APP_CMD_GAINED_FOCUS:
-            Log::Info("Processing APP_CMD_GAINED_FOCUS");
             sensorManager.resume();
             // Start animation
             focused = true;
             break;
-        case APP_CMD_CONFIG_CHANGED:
-            Log::Info("Processing APP_CMD_CONFIG_CHANGED");
-            break;
-        case APP_CMD_LOW_MEMORY:
-            // Free up GL resources
-            Log::Info("Processing APP_CMD_LOW_MEMORY");
-            trimMemory();
-            break;
         // Following cases executed in order when navigating away
-        case APP_CMD_PAUSE:
-            Log::Info("Processing APP_CMD_PAUSE");
-            break;
-
         case APP_CMD_LOST_FOCUS:
             // Can occur when looking at all apps scroll view
-            Log::Info("Processing APP_CMD_LOST_FOCUS");
             sensorManager.suspend();
             // Also stop animating.
             focused = false;
@@ -346,21 +290,12 @@ void OriginalEngine::handleCmd(android_app *app, int32_t cmd) {
             break;
         case APP_CMD_TERM_WINDOW:
             // The window is being hidden or closed, clean it up.
-            Log::Info("Processing APP_CMD_TERM_WINDOW");
             termWindow();
             focused = false;
             break;
-        case APP_CMD_STOP:
-            Log::Info("Processing APP_CMD_STOP");
-            break;
-        case APP_CMD_SAVE_STATE:
-            Log::Info("Processing APP_CMD_SAVE_STATE");
-            break;
-        case APP_CMD_DESTROY:
-            Log::Info("Processing APP_CMD_DESTROY");
-            break;
         default:
-            Log::Warn("Unhandled Command %d", cmd);
+            // Do nothing
+            break;
     }
 }
 

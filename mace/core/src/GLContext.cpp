@@ -31,96 +31,103 @@ GLContext::GLContext():
     context(EGL_NO_CONTEXT),
     width(0),
     height(0),
-    valid(false)
+    initialized(false)
 {}
 
 GLContext::~GLContext() {
-    Log::Warn("~GLContext()");
+    INFO("~GLContext()");
     terminate();
 }
 
 void GLContext::init(ANativeWindow* window) {
-    Log::Warn("GLContext::init()");
-    if (valid) {
+    INFO("Starting OpenGL ES");
+    if (initialized) {
         return;
     }
     this->window = window;
-    initEGLSurface();
+    initEGLDisplay();
     initEGLContext();
-    valid = true;
+
+    // Initialize GL state.
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    initialized = true;
 }
 
-void GLContext::initEGLSurface() {
-    Log::Warn("GLContext::initEGLSurface()");
+void GLContext::reinit(ANativeWindow *window) {
+    INFO("Resuming OpenGL ES")
+    this->window = window;
+    initEGLSurface();
+    if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
+        ASSERT(false, "Unable to eglMakeCurrent");
+    }
+    // Note that screen size might have been changed
+    glViewport(0, 0, width, height);
+}
+
+void GLContext::initEGLDisplay() {
+    INFO("GLContext::initEGLDisplay()");
     display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(display, nullptr, nullptr);
 
-    /*
-     * Here specify the attributes of the desired configuration.
-     * Below, we select an EGLConfig with at least 8 bits per color
-     * component compatible with on-screen windows
-     */
-    const EGLint attribs[] = {
-            EGL_RENDERABLE_TYPE,
-            EGL_OPENGL_ES3_BIT,
-            EGL_SURFACE_TYPE,
-            EGL_WINDOW_BIT,
-            EGL_BLUE_SIZE,
-            8,
-            EGL_GREEN_SIZE,
-            8,
-            EGL_RED_SIZE,
-            8,
-            EGL_DEPTH_SIZE,
-            24,
-            EGL_NONE
+    initEGLConfigs();
+    initEGLSurface();
+}
+
+void GLContext::initEGLConfigs() {
+    const EGLint attributes[] = {
+        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
+        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+        EGL_BLUE_SIZE, 8,
+        EGL_GREEN_SIZE, 8,
+        EGL_RED_SIZE, 8,
+        EGL_DEPTH_SIZE, 24,
+        EGL_NONE
     };
     colorSize = 8;
     depthSize = 24;
 
     EGLint num_configs;
-    eglChooseConfig(display, attribs, &config, 1, &num_configs);
+    eglChooseConfig(display, attributes, &config, 1, &num_configs);
 
     if (!num_configs) {
         // Fall back to 16bit depth buffer
-        const EGLint attribs[] = {
-                EGL_RENDERABLE_TYPE,
-                EGL_OPENGL_ES3_BIT,  // Request opengl ES3.0
-                EGL_SURFACE_TYPE,
-                EGL_WINDOW_BIT,
-                EGL_BLUE_SIZE,
-                8,
-                EGL_GREEN_SIZE,
-                8,
-                EGL_RED_SIZE,
-                8,
-                EGL_DEPTH_SIZE,
-                16,
-                EGL_NONE
+        const EGLint attributes[] = {
+            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,  // Request opengl ES3.0
+            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+            EGL_BLUE_SIZE, 8,
+            EGL_GREEN_SIZE, 8,
+            EGL_RED_SIZE, 8,
+            EGL_DEPTH_SIZE, 16,
+            EGL_NONE
         };
-        eglChooseConfig(display, attribs, &config, 1, &num_configs);
+        eglChooseConfig(display, attributes, &config, 1, &num_configs);
         depthSize = 16;
     }
 
     if (!num_configs) {
-        Log::Error("Unable to retrieve EGL config");
-        assert(false);
+        ERROR("Unable to retrieve EGL config");
+        ASSERT(false, "Unable to retrieve EGL config");
     }
+}
 
+void GLContext::initEGLSurface() {
     surface = eglCreateWindowSurface(display, config, window, nullptr);
     eglQuerySurface(display, surface, EGL_WIDTH, &width);
     eglQuerySurface(display, surface, EGL_HEIGHT, &height);
 }
 
 void GLContext::initEGLContext() {
-    Log::Warn("GLContext::initEGLContext()");
-    const EGLint context_attribs[] = {
-            EGL_CONTEXT_CLIENT_VERSION, 3,  // Request opengl ES2.0
+    INFO("GLContext::initEGLContext()");
+    const EGLint attributes[] = {
+            EGL_CONTEXT_CLIENT_VERSION, 3,  // Request opengl ES3.0
             EGL_NONE                        // done
     };
-    context = eglCreateContext(display, config, nullptr, context_attribs);
+    context = eglCreateContext(display, config, nullptr, attributes);
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
-        Log::Error("Unable to eglMakeCurrent");
+        ERROR("Unable to eglMakeCurrent");
         assert(false);
     }
 }
@@ -131,11 +138,11 @@ EGLint GLContext::swap() {
         EGLint err = eglGetError();
         if (err == EGL_BAD_SURFACE) {
             // Recreate surface
-            initEGLSurface();
+            initEGLDisplay();
             return EGL_SUCCESS;  // Still consider glContext is valid
         } else if (err == EGL_CONTEXT_LOST || err == EGL_BAD_CONTEXT) {
             // Context has been lost!!
-            Log::Error("GLContext::swap() - context lost");
+            ERROR("GLContext::swap() - context lost");
             terminate();
             initEGLContext();
         }
@@ -145,7 +152,7 @@ EGLint GLContext::swap() {
 }
 
 void GLContext::terminate() {
-    Log::Warn("GLContext::terminate()");
+    INFO("GLContext::terminate()");
     if (display != EGL_NO_DISPLAY) {
         eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (context != EGL_NO_CONTEXT) {
@@ -165,61 +172,62 @@ void GLContext::terminate() {
 }
 
 EGLint GLContext::resume(ANativeWindow* window) {
-    Log::Warn("GLContext::resume()");
-    if (!valid) {
+    INFO("GLContext::resume()");
+    if (!initialized) {
         init(window);
         return EGL_SUCCESS;
     }
+    else {
+        this->window = window;
+        int32_t originalWidth = width;
+        int32_t originalHeight = height;
 
-    this->window = window;
-    int32_t original_widhth = width;
-    int32_t original_height = height;
+        // Create surface
+        surface = eglCreateWindowSurface(display, config, window, nullptr);
+        eglQuerySurface(display, surface, EGL_WIDTH, &width);
+        eglQuerySurface(display, surface, EGL_HEIGHT, &height);
 
-    // Create surface
-    surface = eglCreateWindowSurface(display, config, window, nullptr);
-    eglQuerySurface(display, surface, EGL_WIDTH, &width);
-    eglQuerySurface(display, surface, EGL_HEIGHT, &height);
+        if (width != originalWidth || height != originalHeight) {
+            // Screen resized
+            INFO("GLContext::resume() - Screen resized");
+        }
 
-    if (width != original_widhth || height != original_height) {
-        // Screen resized
-        Log::Warn("GLContext::resume() - Screen resized");
+        if (eglMakeCurrent(display, surface, surface, context) == EGL_TRUE)
+            return EGL_SUCCESS;
+
+        EGLint err = eglGetError();
+        INFO("Unable to eglMakeCurrent %d", err);
+
+        if (err == EGL_CONTEXT_LOST) {
+            // Recreate context
+            INFO("Re-creating egl context");
+            initEGLContext();
+        } else {
+            // Recreate surface
+            terminate();
+            initEGLDisplay();
+            initEGLContext();
+        }
+        return err;
     }
 
-    if (eglMakeCurrent(display, surface, surface, context) == EGL_TRUE)
-        return EGL_SUCCESS;
-
-    EGLint err = eglGetError();
-    Log::Warn("Unable to eglMakeCurrent %d", err);
-
-    if (err == EGL_CONTEXT_LOST) {
-        // Recreate context
-        Log::Info("Re-creating egl context");
-        initEGLContext();
-    } else {
-        // Recreate surface
-        terminate();
-        initEGLSurface();
-        initEGLContext();
-    }
-
-    return err;
 }
 
 void GLContext::suspend() {
     if (surface != EGL_NO_SURFACE) {
-        Log::Warn("GLContext::suspend()");
+        INFO("GLContext::suspend()");
         eglDestroySurface(display, surface);
         surface = EGL_NO_SURFACE;
     }
     else {
-        Log::Warn("GLContext::suspend() - no surface");
+        INFO("GLContext::suspend() - no surface");
     }
 }
 
-bool GLContext::invalidate() {
-    Log::Warn("GLContext::invalidate()");
+bool GLContext::destroy() {
+    INFO("Destroying GLContext");
     terminate();
-    valid = false;
+    initialized = false;
     return true;
 }
 

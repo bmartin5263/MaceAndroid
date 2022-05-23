@@ -6,14 +6,14 @@
 
 MACE_START
 
-#define DEBUG (1)
+//#define SHADER_DEBUG (0)
 
 bool CompileShader(
     GLuint *shader, const GLenum type, const char *str_file_name,
     const std::map<std::string, std::string> &map_parameters) {
   std::vector<uint8_t> data;
   if (!mace::ndk::JNIHelper::GetInstance()->ReadFile(str_file_name, &data)) {
-    Log::Info("Can not open a file:%s", str_file_name);
+    INFO("Can not open a file:%s", str_file_name);
     return false;
   }
 
@@ -22,10 +22,8 @@ bool CompileShader(
   std::string str(data.begin(), data.end());
   std::string str_replacement_map(data.size(), ' ');
 
-  std::map<std::string, std::string>::const_iterator it =
-      map_parameters.begin();
-  std::map<std::string, std::string>::const_iterator itEnd =
-      map_parameters.end();
+  auto it = map_parameters.begin();
+  auto itEnd = map_parameters.end();
   while (it != itEnd) {
     size_t pos = 0;
     while ((pos = str.find(it->first, pos)) != std::string::npos) {
@@ -45,7 +43,7 @@ bool CompileShader(
     it++;
   }
 
-  Log::Info("Patched Shdader:\n%s", str.c_str());
+  INFO("Patched Shdader:\n%s", str.c_str());
 
   std::vector<uint8_t> v(str.begin(), str.end());
   str.clear();
@@ -62,13 +60,13 @@ bool CompileShader(GLuint *shader, const GLenum type,
 
   glCompileShader(*shader);
 
-#if defined(DEBUG)
+#if defined(SHADER_DEBUG)
   GLint logLength;
   glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetShaderInfoLog(*shader, logLength, &logLength, log);
-    Log::Info("Shader compile log:\n%s", log);
+    INFO("Shader compile log:\n%s", log);
     free(log);
   }
 #endif
@@ -97,7 +95,7 @@ bool CompileShader(GLuint *shader, const GLenum type,
   std::vector<uint8_t> data;
   bool b = mace::ndk::JNIHelper::GetInstance()->ReadFile(strFileName, &data);
   if (!b) {
-    Log::Info("Can not open a file:%s", strFileName);
+    INFO("Can not open a file:%s", strFileName);
     return false;
   }
 
@@ -109,20 +107,20 @@ bool LinkProgram(const GLuint prog) {
 
   glLinkProgram(prog);
 
-#if defined(DEBUG)
+#if defined(SHADER_DEBUG)
   GLint logLength;
   glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetProgramInfoLog(prog, logLength, &logLength, log);
-    Log::Info("Program link log:\n%s", log);
+    INFO("Program link log:\n%s", log);
     free(log);
   }
 #endif
 
   glGetProgramiv(prog, GL_LINK_STATUS, &status);
   if (status == 0) {
-    Log::Info("Program link failed\n");
+    INFO("Program link failed\n");
     return false;
   }
 
@@ -137,7 +135,7 @@ bool ValidateProgram(const GLuint prog) {
   if (logLength > 0) {
     GLchar *log = (GLchar *)malloc(logLength);
     glGetProgramInfoLog(prog, logLength, &logLength, log);
-    Log::Info("Program validate log:\n%s", log);
+    INFO("Program validate log:\n%s", log);
     free(log);
   }
 

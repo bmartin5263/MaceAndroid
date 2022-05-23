@@ -15,7 +15,7 @@
  * event loop for receiving input events and doing other things.
  */
 void android_main(android_app* app) {
-    mace::Log::Info("Hello, %i", 3);
+    WARN("Application Starting");
 
     Game g{};
     g.start();

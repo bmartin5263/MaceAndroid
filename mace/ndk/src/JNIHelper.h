@@ -78,7 +78,7 @@ private:
      * Unregister this thread from the VM
      */
     static void DetachCurrentThreadDtor(void* p) {
-        Log::Info("detached current thread");
+        INFO("detached current thread");
         if (p != nullptr) {
             ANativeActivity *activity = (ANativeActivity *) p;
             activity->vm->DetachCurrentThread();

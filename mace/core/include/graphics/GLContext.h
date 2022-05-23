@@ -32,23 +32,24 @@ public:
     virtual ~GLContext();
 
     void init(ANativeWindow* window);
+    void reinit(ANativeWindow* window);
+    bool destroy();
 
-    bool invalidate();
     EGLint resume(ANativeWindow* window);
-
     void suspend();
 
     EGLint swap();
+
     ANativeWindow* getANativeWindow() const { return window; };
     int32_t getScreenWidth() const { return width; }
-
     int32_t getScreenHeight() const { return height; }
+    bool isInitialized() const { return initialized; }
 
 private:
     // EGL configurations
-    ANativeWindow* window;
-    EGLDisplay display;
-    EGLSurface surface;
+    ANativeWindow* window;      // provided by Platform
+    EGLDisplay display;         // created when starting EGL
+    EGLSurface surface;         // has width/height
     EGLContext context;
     EGLConfig config;
 
@@ -59,10 +60,12 @@ private:
     int32_t depthSize;
 
     // Flags
-    bool valid;
+    bool initialized;
     float glVersion;
 
     void terminate();
+    void initEGLDisplay();
+    void initEGLConfigs();
     void initEGLSurface();
     void initEGLContext();
 

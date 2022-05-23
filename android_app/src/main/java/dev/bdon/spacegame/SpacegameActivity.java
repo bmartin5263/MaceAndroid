@@ -31,36 +31,44 @@ import android.widget.TextView;
 
 import com.sample.spacegame.R;
 
+import java.util.Objects;
+
 public class SpacegameActivity extends NativeActivity {
 
-    SpacegameActivity activity;
     PopupWindow popupWindow;
     TextView fpsLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("native-activity", "Activity Created");
+        Log.d("native-activity", "Activity Created");
 
         //Hide toolbar
         View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener(visibility -> hideTopBar());
     }
 
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Log.d("native-activity", "attach to window " + Objects.toString(getWindow()));
+        showUI();
+    }
+
     protected void onResume() {
         super.onResume();
-        Log.i("native-activity", "onResume");
+        Log.d("native-activity", "onResume");
         hideTopBar();
     }
 
     protected void onPause() {
         super.onPause();
-        Log.i("native-activity", "onPause");
+        Log.d("native-activity", "onPause");
     }
 
     // Removes the top bar to make view appear fullscreen
     void hideTopBar() {
-        Log.i("native-activity", "setImmersiveSticky");
+        Log.d("native-activity", "setImmersiveSticky");
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -72,40 +80,37 @@ public class SpacegameActivity extends NativeActivity {
 
     @SuppressLint("InflateParams")
     public void showUI() {
-        if (popupWindow != null) {
-            Log.i("native-activity", "popupWindow != null");
-            return;
+        if (popupWindow == null) {
+            Log.i("native-activity", "Creating popup ui");
+            this.runOnUiThread(this::createPopupUi);
         }
-        activity = this;
-        this.runOnUiThread(this::createPopupUi);
     }
 
     @SuppressLint("DefaultLocale")
     public void updateFPS(final float fFPS) {
         if (fpsLabel != null) {
-            activity = this;
             this.runOnUiThread(() -> fpsLabel.setText(String.format("%2.2f FPS", fFPS)));
         }
     }
 
     @SuppressLint("InflateParams")
     public void createPopupUi() {
-        Log.i("native-activity", "popup stuff");
+        Log.d("native-activity", "popup stuff");
         var layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View popupView = layoutInflater.inflate(R.layout.widgets, null);
         popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-        LinearLayout mainLayout = new LinearLayout(activity);
+        LinearLayout mainLayout = new LinearLayout(this);
         MarginLayoutParams params = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 0, 0);
-        activity.setContentView(mainLayout, params);
+        setContentView(mainLayout, params);
 
         // Show our UI over NativeActivity window
         popupWindow.showAtLocation(mainLayout, Gravity.TOP | Gravity.START, 10, 10);
         popupWindow.update();
 
-        fpsLabel = (TextView)popupView.findViewById(R.id.textViewFPS);
+        fpsLabel = popupView.findViewById(R.id.textViewFPS);
     }
 }
 

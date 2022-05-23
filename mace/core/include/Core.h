@@ -12,7 +12,9 @@
 #define MACE_NDK_END }}
 
 #ifdef __ANDROID__
-#define ASSERT(cond, ...) if (!(cond)) {__android_log_assert(#cond, "CoreAssert", __VA_ARGS__);}
+#define ASSERT(cond, ...) if (!(cond)) {__android_log_assert(#cond, __FUNCTION__, __VA_ARGS__);}
 #endif
+
+#define del(x) delete x; x = nullptr;
 
 #endif //MACE_CORE_H
