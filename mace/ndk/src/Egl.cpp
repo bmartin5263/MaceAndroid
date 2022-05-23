@@ -13,7 +13,7 @@ constexpr EGLint Egl::DEPTH_24_BIT_ATTRIBUTE[];
 constexpr EGLint Egl::DEPTH_16_BIT_ATTRIBUTE[];
 
 void Egl::init(ANativeWindow *window) {
-    INFO("Starting EGL")
+    INFO("Starting EGL");
 
     display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(display, nullptr, nullptr);
@@ -27,21 +27,21 @@ void Egl::init(ANativeWindow *window) {
 }
 
 void Egl::resume(ANativeWindow *window) {
-    INFO("Resuming EGL")
+    INFO("Resuming EGL");
 
     surface = createSurface(display, config, window);
     makeContextCurrent(display, surface, context);
 }
 
 void Egl::suspend() {
-    INFO("Suspending EGL")
+    INFO("Suspending EGL");
 
     eglDestroySurface(display, surface);
     surface = EGL_NO_SURFACE;
 }
 
 void Egl::terminate() {
-    INFO("Terminating EGL")
+    INFO("Terminating EGL");
 
     if (display != EGL_NO_DISPLAY) {
         eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -61,7 +61,7 @@ void Egl::terminate() {
 }
 
 EGLSurface Egl::createSurface(EGLDisplay display, EGLConfig config, EGLNativeWindowType window) {
-    DBUG("Creating EGL Surface")
+    DBUG("Creating EGL Surface");
     auto surface = eglCreateWindowSurface(display, config, window, nullptr);
     eglQuerySurface(display, surface, EGL_WIDTH, &width);
     eglQuerySurface(display, surface, EGL_HEIGHT, &height);
@@ -78,7 +78,7 @@ EGLConfig Egl::createConfig(EGLDisplay display) {
         this->depthSize = 16;
         if (configCount == 0) {
             ERROR("Unable to retrieve EGL config");
-            ASSERT(false, "Unable to retrieve EGL config");
+            ASSERT(false, "Unable to retrieve EGL config")
         }
     }
 
@@ -86,16 +86,16 @@ EGLConfig Egl::createConfig(EGLDisplay display) {
 }
 
 void Egl::makeContextCurrent(EGLDisplay display, EGLSurface surface, EGLContext context) {
-    DBUG("Setting EGL Context")
+    DBUG("Setting EGL Context");
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
-        ASSERT(false, "Unable to eglMakeCurrent");
+        ASSERT(false, "Unable to eglMakeCurrent")
     }
 }
 
 void Egl::swap() {
     bool success = eglSwapBuffers(display, surface);
     if (!success) {
-        ASSERT(false, "Failed to swap buffer");
+        ASSERT(false, "Failed to swap buffer")
     }
 }
 

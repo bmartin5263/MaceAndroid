@@ -25,7 +25,7 @@ OriginalEngine::OriginalEngine(android_app* app):
     focused(false),
     app(app)
 {
-    doubletapDetector.setConfiguration(this->app->config);
+    doubleTapDetector.setConfiguration(this->app->config);
     dragDetector.setConfiguration(this->app->config);
     pinchDetector.setConfiguration(this->app->config);
     teapotRender.bind(&tapCamera);
@@ -33,12 +33,12 @@ OriginalEngine::OriginalEngine(android_app* app):
 }
 
 void OriginalEngine::loadResources() {
-    INFO("Loading Resources")
+    INFO("Loading Resources");
     teapotRender.init(app->activity->assetManager);
 }
 
 void OriginalEngine::unloadResources() {
-    INFO("Unloading Resources")
+    INFO("Unloading Resources");
     teapotRender.destroy();
 }
 
@@ -102,12 +102,12 @@ void OriginalEngine::handleDrag(AInputEvent* event) {
         // Otherwise, start dragging
         Vec2 v;
         dragDetector.getPointer(v);
-        transformPosition(v);
+        toGlCoordinates(v);
         tapCamera.beginDrag(v);
     } else if (dragState & GESTURE_STATE_MOVE) {
         Vec2 v;
         dragDetector.getPointer(v);
-        transformPosition(v);
+        toGlCoordinates(v);
         tapCamera.drag(v);
     } else if (dragState & GESTURE_STATE_END) {
         tapCamera.endDrag();
@@ -121,14 +121,14 @@ void OriginalEngine::handlePinch(AInputEvent* event) {
         // Start new pinch
         Vec2 v1, v2;
         pinchDetector.getPointers(v1, v2);
-        transformPosition(v1,v2);
+        toGlCoordinates(v1, v2);
         tapCamera.beginPinch(v1, v2);
     } else if (pinchState & mace::ndk::GESTURE_STATE_MOVE) {
         // Multi touch
         // Start new pinch
         Vec2 v1, v2;
         pinchDetector.getPointers(v1, v2);
-        transformPosition(v1, v2);
+        toGlCoordinates(v1, v2);
         tapCamera.pinch(v1, v2);
     }
 }
@@ -153,20 +153,17 @@ bool OriginalEngine::hasFocus() const {
     return focused;
 }
 
-void OriginalEngine::transformPosition(Vec2 &vec) {
+void OriginalEngine::toGlCoordinates(Vec2 &vec) {
     auto w = static_cast<float>(glContext.getScreenWidth());
     auto h = static_cast<float>(glContext.getScreenHeight());
-    DBUG("In  Vec2(x=%d, y=%d)", vec.x_, vec.y_)
     vec = Vec2(2.0f, 2.0f) * vec /
           Vec2(w,h) -
           Vec2(1.f, 1.f);
-    DBUG("Out Vec2(x=%d, y=%d)", vec.x_, vec.y_)
-
 }
 
-void OriginalEngine::transformPosition(Vec2 &v1, Vec2 &v2) {
-    transformPosition(v1);
-    transformPosition(v2);
+void OriginalEngine::toGlCoordinates(Vec2 &v1, Vec2 &v2) {
+    toGlCoordinates(v1);
+    toGlCoordinates(v2);
 }
 
 //void OriginalEngine::showUI() {
@@ -199,7 +196,7 @@ void OriginalEngine::run() {
         draw();
     }
 
-    ERROR("Shutdown")
+    ERROR("Shutdown");
 }
 
 bool OriginalEngine::update() {
@@ -219,13 +216,13 @@ bool OriginalEngine::update() {
         // 3 = Clock tick?
 
         if (id > 3) {
-            WARN("Polled: %d", id)
+            WARN("Polled: %d", id);
         }
 
         // Process this event.
         if (source != nullptr) {
             if (id > 3) {
-                WARN("Source Process: %d", id)
+                WARN("Source Process: %d", id);
             }
             source->process(app, source);
         }
@@ -288,7 +285,7 @@ int32_t OriginalEngine::handleInputEvent(android_app *app, AInputEvent *event) {
     auto* engine = static_cast<OriginalEngine*>(app->userData);
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
         // Double tap detector has a priority over other detectors
-        GestureState doubleTapState = engine->doubletapDetector.detect(event);
+        GestureState doubleTapState = engine->doubleTapDetector.detect(event);
         if (doubleTapState == GESTURE_STATE_ACTION) {
             // Detect double tap
             engine->tapCamera.reset(true);

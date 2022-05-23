@@ -29,17 +29,6 @@ IF(ANDROID)
     include(AndroidNdkModules)
     android_ndk_import_module_native_app_glue()
     add_library(mace STATIC
-
-            ndk/src/GestureDetector.cpp
-            ndk/src/JNIHelper.cpp
-            ndk/src/SensorManager.cpp
-            ndk/src/AndroidEngine.cpp
-            ndk/src/AndroidLog.cpp
-            ndk/src/AssetUtil.cpp
-            ndk/src/OriginalEngine.cpp
-            ndk/src/Util.cpp
-            ndk/src/Egl.cpp
-
             core/src/CoreEngine.cpp
             core/src/Clock.cpp
             core/src/EventSystem.cpp
@@ -54,6 +43,20 @@ IF(ANDROID)
             core/src/TapCamera.cpp
             core/src/vecmath.cpp
             core/src/Texture.cpp
+
+            ndk/src/GestureDetector.cpp
+            ndk/src/JNIHelper.cpp
+            ndk/src/SensorManager.cpp
+            ndk/src/AndroidEngine.cpp
+            ndk/src/AndroidLog.cpp
+            ndk/src/AssetUtil.cpp
+            ndk/src/OriginalEngine.cpp
+            ndk/src/Util.cpp
+            ndk/src/Egl.cpp
+            ndk/src/TapDetector.cpp
+            ndk/src/DoubleTapDetector.cpp
+            ndk/src/PinchDetector.cpp
+            ndk/src/DragDetector.cpp
     )
     set_target_properties(
             mace

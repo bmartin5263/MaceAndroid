@@ -53,7 +53,7 @@ void GLContext::init(ANativeWindow* window) {
 }
 
 void GLContext::resume(ANativeWindow *window) {
-    INFO("Resuming OpenGL ES")
+    INFO("Resuming OpenGL ES");
     this->window = window;
     egl.resume(window);
 

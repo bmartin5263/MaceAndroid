@@ -18,6 +18,9 @@
 
 #include "rendering/TexturedTeapotRenderer.h"
 #include "NDKHelper.h"
+#include "PinchDetector.h"
+#include "DoubleTapDetector.h"
+#include "DragDetector.h"
 
 #include "rendering/TapCamera.h"
 
@@ -45,12 +48,12 @@ public:
 private:
     void updateFPS();
 
-    void transformPosition(mace::Vec2 &vec);
+    void toGlCoordinates(mace::Vec2 &vec);
+    inline void toGlCoordinates(mace::Vec2 &v1, mace::Vec2 &v2);
 
     // Input handling
     void handleDrag(AInputEvent *event);
     void handlePinch(AInputEvent *event);
-    inline void transformPosition(mace::Vec2 &v1, mace::Vec2 &v2);
 
     bool focused;
 
@@ -62,7 +65,7 @@ private:
 
     mace::TexturedTeapotRenderer teapotRender;
 
-    mace::ndk::DoubletapDetector doubletapDetector;
+    mace::ndk::DoubleTapDetector doubleTapDetector;
     mace::ndk::DragDetector dragDetector;
     mace::ndk::PinchDetector pinchDetector;
     mace::ndk::SensorManager sensorManager;

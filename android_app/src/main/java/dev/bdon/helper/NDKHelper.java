@@ -38,6 +38,7 @@ import android.media.AudioTrack;
 import android.opengl.GLUtils;
 import android.os.Build;
 import android.util.Log;
+import android.view.MotionEvent;
 
 @SuppressWarnings("unused")
 @TargetApi(Build.VERSION_CODES.S_V2)    // Linting

@@ -20,9 +20,9 @@ public:
 
 MACE_END
 
-#define DBUG(...) mace::Log::Debug(__FUNCTION__, __VA_ARGS__);
-#define INFO(...) mace::Log::Info(__FUNCTION__, __VA_ARGS__);
-#define WARN(...) mace::Log::Warn(__FUNCTION__, __VA_ARGS__);
-#define ERROR(...) mace::Log::Error(__FUNCTION__, __VA_ARGS__);
+#define DBUG(...) mace::Log::Debug(__FUNCTION__, __VA_ARGS__)
+#define INFO(...) mace::Log::Info(__FUNCTION__, __VA_ARGS__)
+#define WARN(...) mace::Log::Warn(__FUNCTION__, __VA_ARGS__)
+#define ERROR(...) mace::Log::Error(__FUNCTION__, __VA_ARGS__)
 
 #endif //MACE_LOG_H

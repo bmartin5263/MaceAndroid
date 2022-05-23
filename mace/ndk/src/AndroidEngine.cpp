@@ -24,7 +24,7 @@ PlatformEngine::PlatformEngine(android_app *androidApp):
 
 void PlatformEngine::launch(EngineImpl *engine) {
     ERROR("AndroidEngine::launch()");
-    doubletapDetector.setConfiguration(this->app->config);
+    doubleTapDetector.setConfiguration(this->app->config);
     dragDetector.setConfiguration(this->app->config);
     pinchDetector.setConfiguration(this->app->config);
 //    mace::ndk::JNIHelper::Init(app->activity, HELPER_CLASS_NAME);
